@@ -1,3 +1,10 @@
 # Visual Workspace and Audit Engine
 
-Reusable scope-safe graphs, timelines, operator views and accessible inspection contracts. Deployment-specific data is supplied through authenticated projections. Live acceptance and dependency adapters are tracked separately from visual component implementation.
+Reusable country-neutral engine. Initial capabilities and limits are documented in [architecture](docs/ARCHITECTURE.md); the canonical work plan is [registry/prs.json](registry/prs.json).
+
+```sh
+npm ci
+npm run check
+```
+
+All research and jurisdiction configuration belong in downstream deployments. Implementation, local tests, CI, merge and live acceptance are separate.

@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "repository": "neophilism/Visual-workspace-and-audit-engine",
+  "roadmapVersion": 1,
+  "planVerified": true,
+  "plannedPrCount": 6,
+  "observedAt": "2026-10-26T18:50:00Z",
+  "units": [
+    {
+      "id": "VWA-001",
+      "title": "Scope-safe visual record contracts and stable graph layout",
+      "origin": "original",
+      "prs": [],
+      "contributingPrs": [],
+      "dependsOn": [],
+      "externalDependencies": [],
+      "externalPrerequisites": [],
+      "scope": [
+        "Scope-safe visual record contracts and stable graph layout"
+      ],
+      "acceptanceCriteria": "Verify required behavior, rejection paths, source-bound test evidence and private defaults; live acceptance remains separate.",
+      "implementationStatus": "planned"
+    },
+    {
+      "id": "VWA-002",
+      "title": "Objective task and persistent agent projections",
+      "origin": "original",
+      "prs": [],
+      "contributingPrs": [],
+      "dependsOn": [
+        "VWA-001"
+      ],
+      "externalDependencies": [],
+      "externalPrerequisites": [],
+      "scope": [
+        "Objective task and persistent agent projections"
+      ],
+      "acceptanceCriteria": "Verify required behavior, rejection paths, source-bound test evidence and private defaults; live acceptance remains separate.",
+      "implementationStatus": "planned"
+    },
+    {
+      "id": "VWA-003",
+      "title": "Evidence timeline and correction-impact inspectors",
+      "origin": "original",
+      "prs": [],
+      "contributingPrs": [],
+      "dependsOn": [
+        "VWA-001"
+      ],
+      "externalDependencies": [],
+      "externalPrerequisites": [],
+      "scope": [
+        "Evidence timeline and correction-impact inspectors"
+      ],
+      "acceptanceCriteria": "Verify required behavior, rejection paths, source-bound test evidence and private defaults; live acceptance remains separate.",
+      "implementationStatus": "planned"
+    },
+    {
+      "id": "VWA-004",
+      "title": "Accessible correspondence and investigation views",
+      "origin": "original",
+      "prs": [],
+      "contributingPrs": [],
+      "dependsOn": [
+        "VWA-001"
+      ],
+      "externalDependencies": [],
+      "externalPrerequisites": [],
+      "scope": [
+        "Accessible correspondence and investigation views"
+      ],
+      "acceptanceCriteria": "Verify required behavior, rejection paths, source-bound test evidence and private defaults; live acceptance remains separate.",
+      "implementationStatus": "planned"
+    },
+    {
+      "id": "VWA-005",
+      "title": "Live event delivery operator controls and policy projections",
+      "origin": "original",
+      "prs": [],
+      "contributingPrs": [],
+      "dependsOn": [
+        "VWA-002",
+        "VWA-003",
+        "VWA-004"
+      ],
+      "externalDependencies": [],
+      "externalPrerequisites": [],
+      "scope": [
+        "Live event delivery operator controls and policy projections"
+      ],
+      "acceptanceCriteria": "Verify required behavior, rejection paths, source-bound test evidence and private defaults; live acceptance remains separate.",
+      "implementationStatus": "planned"
+    },
+    {
+      "id": "VWA-006",
+      "title": "Browser accessibility multilingual and live acceptance",
+      "origin": "original",
+      "prs": [],
+      "contributingPrs": [],
+      "dependsOn": [
+        "VWA-005"
+      ],
+      "externalDependencies": [],
+      "externalPrerequisites": [],
+      "scope": [
+        "Browser accessibility multilingual and live acceptance"
+      ],
+      "acceptanceCriteria": "Verify required behavior, rejection paths, source-bound test evidence and private defaults; live acceptance remains separate.",
+      "implementationStatus": "planned"
+    }
+  ],
+  "pullRequests": []
+}
