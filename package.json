@@ -11,6 +11,10 @@
     "./contracts": {
       "types": "./dist/contracts.d.ts",
       "default": "./dist/contracts.js"
+    },
+    "./operations": {
+      "types": "./dist/operations.d.ts",
+      "default": "./dist/operations.js"
     }
   },
   "engines": {
@@ -33,5 +37,9 @@
     "dist",
     "README.md",
     "docs"
-  ]
+  ],
+  "dependencies": {
+    "@accountability/resources": "git+https://github.com/neophilism/Resources-and-commercial-operations-engine.git#5a1ed825fef938702c333066935afea4c42f9b21",
+    "@accountability/packaging-release": "git+https://github.com/neophilism/Packaging-release-and-correction-engine.git#b3ddcaeba1bef27310ff2113d6abca9a249b40a7"
+  }
 }
