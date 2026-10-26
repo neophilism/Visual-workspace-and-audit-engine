@@ -4,7 +4,7 @@
   "roadmapVersion": 1,
   "planVerified": true,
   "plannedPrCount": 6,
-  "observedAt": "2026-10-26T20:42:50Z",
+  "observedAt": "2026-10-26T21:52:34Z",
   "units": [
     {
       "id": "VWA-001",
@@ -67,18 +67,24 @@
       "origin": "original",
       "prs": [],
       "contributingPrs": [
-        4
+        4,
+        5
       ],
       "dependsOn": [
         "VWA-001"
       ],
-      "externalDependencies": [],
+      "externalDependencies": [
+        {
+          "repository": "neophilism/Correspondence-and-Outreach-Engine",
+          "unitId": "COE-004"
+        }
+      ],
       "externalPrerequisites": [],
       "scope": [
         "Accessible correspondence and investigation views"
       ],
       "acceptanceCriteria": "Verify required behavior, rejection paths, source-bound test evidence and private defaults; live acceptance remains separate.",
-      "implementationStatus": "Partial authorized private read-only inbox with folders/search/conversation review. Authenticated compose/edit/takeover, investigation/case screens and live browser acceptance remain pending."
+      "implementationStatus": "Partial: private inbox plus operator client and mounted existing-conversation draft/flag/takeover controls. Full pagination, new-conversation UI, live host integration, case views and browser acceptance remain pending."
     },
     {
       "id": "VWA-005",

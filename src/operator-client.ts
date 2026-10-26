@@ -49,6 +49,9 @@ export class OperatorClient {
     this.#fetch = transport;
     this.#timeout = timeoutMs;
   }
+  get origin(): string {
+    return this.#origin;
+  }
   get pending(): PendingEdit | null {
     return this.#pending ? structuredClone(this.#pending) : null;
   }

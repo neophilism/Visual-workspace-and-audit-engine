@@ -1,4 +1,5 @@
 import test from "node:test";
+import { fixture } from "./operator-helpers.ts";
 import assert from "node:assert/strict";
 import {
   createAlphaCorrespondenceFixture,
@@ -6,45 +7,7 @@ import {
 } from "@accountability/correspondence";
 import { createOperatorHandler } from "@accountability/correspondence/operator";
 import { OperatorClient } from "../src/operator-client.ts";
-export function fixture() {
-  const f = createAlphaCorrespondenceFixture();
-  let state = f.state;
-  const context = f.steps[0]!.context;
-  const requests: any[] = [];
-  const handler = createOperatorHandler(
-    {
-      load: async () => structuredClone(state),
-      execute: async (c, _id, expected, command) => {
-        assert(
-          expected === state.revision ||
-            state.receipts.some((r) => r.inputId === command.inputId),
-        );
-        const result = transitionCorrespondence(state, c, command);
-        state = result.state;
-        return result;
-      },
-    },
-    { authenticate: async () => ({ context, csrfToken: "c".repeat(43) }) },
-    {
-      tenantId: state.tenantId,
-      projectId: state.projectId,
-      mailboxId: state.mailbox.id,
-      origin: "https://workspace.example",
-    },
-  );
-  const transport: typeof fetch = async (input, init) => {
-    requests.push({ url: String(input), init });
-    return handler(new Request(input, init));
-  };
-  return {
-    client: new OperatorClient("https://workspace.example", transport),
-    transport,
-    requests,
-    get state() {
-      return state;
-    },
-  };
-}
+
 test("client uses actual private handler session CSRF and human takeover protocol", async () => {
   const f = fixture(),
     s = await f.client.session();
@@ -125,5 +88,29 @@ test("outbound commands configuration malformed sessions and timeout fail closed
   await assert.rejects(
     stalled.session(),
     (e: any) => e.code === "outcome_unknown",
+  );
+});
+
+test("stale viewed revisions reject without automatic recomputation or retry", async () => {
+  const f = fixture(),
+    old = await f.client.session();
+  await f.client.submit(old.revision, {
+    type: "setControl",
+    inputId: "advance",
+    mode: "human",
+  });
+  const count = f.requests.length;
+  await assert.rejects(
+    f.client.submit(old.revision, {
+      type: "setControl",
+      inputId: "stale",
+      mode: "human",
+    }),
+    (e: any) => e.code === "revision_conflict",
+  );
+  assert.equal(f.client.pending, null);
+  assert.equal(
+    f.requests.slice(count).filter((r) => r.init.method === "POST").length,
+    1,
   );
 });

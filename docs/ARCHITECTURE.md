@@ -19,3 +19,7 @@ Live subscriptions, moving agent interpolation across snapshots, authenticated i
 ## Correspondence inbox
 
 [Private inbox](INBOX.md) implements the authorized read-only folder/search/conversation component using pinned Correspondence projections. It preserves unverified reply status and private defaults, excluding grants and credential handles. Compose, takeover controls and live authenticated commands remain pending.
+
+## Private operator controls
+
+[Operator controls](OPERATOR_CONTROLS.md) add an opt-in same-origin client and mounted private draft/flag/takeover component. They use the accepted Correspondence gateway, capture viewed revisions, block edits after uncertain responses and explicitly reconcile exact original commands. The offline inbox remains unchanged; live hosting and broader UI acceptance remain separate.
