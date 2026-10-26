@@ -4,7 +4,7 @@
   "roadmapVersion": 1,
   "planVerified": true,
   "plannedPrCount": 6,
-  "observedAt": "2026-10-26T18:50:00Z",
+  "observedAt": "2026-10-26T20:30:00Z",
   "units": [
     {
       "id": "VWA-001",
@@ -12,7 +12,9 @@
       "origin": "original",
       "prs": [],
       "contributingPrs": [
-        1
+        1,
+        2,
+        3
       ],
       "dependsOn": [],
       "externalDependencies": [],
@@ -45,7 +47,9 @@
       "title": "Evidence timeline and correction-impact inspectors",
       "origin": "original",
       "prs": [],
-      "contributingPrs": [],
+      "contributingPrs": [
+        3
+      ],
       "dependsOn": [
         "VWA-001"
       ],
@@ -55,7 +59,7 @@
         "Evidence timeline and correction-impact inspectors"
       ],
       "acceptanceCriteria": "Verify required behavior, rejection paths, source-bound test evidence and private defaults; live acceptance remains separate.",
-      "implementationStatus": "planned"
+      "implementationStatus": "Partial: private budget and exact release-history projections with correction inspectors; broader evidence timeline integration and real-browser acceptance remain pending."
     },
     {
       "id": "VWA-004",

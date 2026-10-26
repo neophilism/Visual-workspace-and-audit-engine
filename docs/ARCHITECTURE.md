@@ -11,3 +11,7 @@ Live subscriptions, moving agent interpolation across snapshots, authenticated e
 ## Interaction verification and example
 
 `docs/examples/private-workspace.html` is a generated, entirely fictional private export that can be opened locally. DOM interaction tests execute the generated inspector code, verify graph/table selection despite reordered input, exercise keyboard activation and close, and check that injected script terminators remain inert. Native dialog opening is stubbed in the DOM tests; real-browser, assistive-technology and live-host acceptance remain separate. The local environment currently has no available browser binary; a vendor download attempt failed, so no browser acceptance is claimed.
+
+## Budget and release adapters
+
+[Private operations projections](OPERATIONS.md) connect typed pinned budget and release snapshots to the graph, table, timeline and exact-record inspector. They preserve uncertainty and historical corrections, reject inconsistent bindings and expose no mutation or external transport.
