@@ -23,3 +23,5 @@ Live subscriptions, moving agent interpolation across snapshots, authenticated i
 ## Private operator controls
 
 [Operator controls](OPERATOR_CONTROLS.md) add an opt-in same-origin client and mounted private draft/flag/takeover component. They use the accepted Correspondence gateway, capture viewed revisions, block edits after uncertain responses and explicitly reconcile exact original commands. The offline inbox remains unchanged; live hosting and broader UI acceptance remain separate.
+
+Operator controls also provide revision-bound pagination and two-stage new-conversation composition. Each stage retains its own outcome and idempotent command identity; an uncertain first-stage result requires explicit reconciliation and a separate user action before the draft stage. Host/browser acceptance and reload recovery remain separate.

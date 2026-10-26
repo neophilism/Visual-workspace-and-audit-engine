@@ -45,6 +45,9 @@ export function mountOperatorControls(
     const b = el("button", label);
     b.type = "button";
     b.dataset.reconcile = String(reconcile);
+    b.dataset.compose = String(
+      ["Create conversation and draft", "Cancel composition"].includes(label),
+    );
     b.onclick = () => {
       void run(action);
     };
@@ -54,7 +57,10 @@ export function mountOperatorControls(
     root.querySelectorAll<HTMLButtonElement>("button").forEach((b) => {
       b.disabled =
         busy ||
-        (b.dataset.reconcile === "true" ? !client.pending : !!client.pending);
+        (b.dataset.reconcile === "true" ? !client.pending : !!client.pending) ||
+        (!!composition &&
+          b.dataset.compose !== "true" &&
+          b.dataset.reconcile !== "true");
     });
   }
   async function run(action: () => Promise<string | void>) {
@@ -192,7 +198,9 @@ export function mountOperatorControls(
     list.append(
       el(
         "p",
-        `${offset + 1}-${offset + page.threads.length} of ${page.total} conversations`,
+        page.threads.length
+          ? `${offset + 1}-${offset + page.threads.length} of ${page.total} conversations`
+          : `No conversations on this page (${page.total} total)`,
       ),
     );
     if (offset > 0)

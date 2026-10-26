@@ -153,6 +153,12 @@ test("definite draft rejection preserves the existing conversation and does not 
       "Conversation exists; draft remains incomplete",
     ),
   );
+  assert(
+    [...s.root.querySelectorAll("button")].find(
+      (b) => b.textContent === "New conversation",
+    )!.disabled,
+  );
+  assert.equal(s.root.querySelector("textarea")!.value, "Private draft body");
   s.click("Cancel composition");
   await settle();
   assert.equal(f.state.threads.length, 2);
