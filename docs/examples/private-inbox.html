@@ -1,0 +1,160 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; base-uri 'none'; form-action 'none'"><title>Alpha Research · Private inbox</title><style>body{margin:0;font:15px system-ui;color:#163b34;background:#eef4f1}body>header{background:#173d35;color:white;padding:20px 4%}h1{font-size:24px;margin:6px 0}main{padding:20px 4%}.workspace{display:grid;grid-template-columns:150px minmax(240px,1fr) minmax(300px,2fr);gap:16px}nav,section{min-width:0;background:white;border:1px solid #ccdcd2;border-radius:10px;padding:14px}nav button{width:100%;margin-bottom:5px;text-transform:capitalize}button{font:inherit;border:1px solid #bfd4c7;background:#f4f8f5;color:#173d35;border-radius:7px;padding:10px;cursor:pointer;text-align:left}button[aria-pressed=true]{background:#dceee3;border-color:#2b7151}button:focus-visible,input:focus-visible{outline:3px solid #b17914}.thread{display:block;width:100%;margin-bottom:9px;overflow-wrap:anywhere}.thread span,.thread small{display:block;margin-top:5px}.thread.unread strong{font-weight:800}.thread.read strong{font-weight:500}small,.meta{font-size:12px;color:#4c6b5e}pre{font:inherit;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.6}article{border-top:1px solid #ccdcd2;padding:15px 0}.draft{border-left:4px solid #b08026;padding-left:12px}.status,.unverified{background:#f5edd9;padding:9px;display:block}.tools{margin-bottom:16px}input{font:inherit;width:min(500px,90%);padding:12px;border:1px solid #a5c1b0;border-radius:8px}#conversation{overflow-wrap:anywhere}#result-status{font-size:13px}@media(max-width:900px){.workspace{grid-template-columns:130px 1fr}#conversation{grid-column:1/-1}}@media(max-width:550px){.workspace{grid-template-columns:1fr}nav{display:flex;flex-wrap:wrap;gap:5px}nav button{width:auto;margin:0}#conversation{grid-column:auto}}</style></head><body><header><small style="color:#d7e7dc">PRIVATE · READ-ONLY SNAPSHOT</small><h1>Alpha Research</h1><p>Mailbox control: autonomous · Captured 2030-01-01T00:00:00.000Z</p></header><main><div class="tools"><label for="search">Search conversations</label><br><input id="search" type="search" maxlength="200" autocomplete="off"><p id="result-status" role="status" aria-live="polite"></p></div><div class="workspace"><nav aria-label="Mail folders"><button type="button" data-view="inbox" aria-pressed="false">inbox</button><button type="button" data-view="unread" aria-pressed="false">unread</button><button type="button" data-view="starred" aria-pressed="false">starred</button><button type="button" data-view="drafts" aria-pressed="false">drafts</button><button type="button" data-view="sent" aria-pressed="false">sent</button><button type="button" data-view="archive" aria-pressed="false">archive</button><button type="button" data-view="all" aria-pressed="false">All mail</button><button type="button" data-view="trash" aria-pressed="false">trash</button><button type="button" data-view="spam" aria-pressed="false">spam</button></nav><section aria-label="Conversation list" id="threads"></section><section aria-label="Conversation" id="conversation" tabindex="0"></section></div></main><script id="inbox-data" type="application/json">{"schemaVersion":1,"visibility":"private","mailboxId":"alpha-mailbox","brand":"Alpha Research","control":"autonomous","revision":10,"capturedAt":"2030-01-01T00:00:00.000Z","membership":{"inbox":["alpha-thread"],"unread":["alpha-thread"],"starred":[],"drafts":[],"sent":["alpha-thread"],"archive":[],"all":["alpha-thread"],"trash":[],"spam":[]},"threads":[{"thread":{"id":"alpha-thread","recipient":"records@beta.example","subject":"Record availability","folder":"inbox","read":false,"starred":false,"contextEpoch":1,"autonomyPaused":true,"createdAt":"2030-01-01T00:00:00.000Z","lastActivityAt":"2030-01-01T00:00:00.000Z"},"messages":[{"ref":{"tenantId":"alpha","projectId":"beta","kind":"correspondence-message","id":"out-51b5fc4a8b0ce41d09c969f2fa018c24ce1a1f2a24443c9e292b258b56ca300b","revision":1},"direction":"outbound","from":"research@alpha.example","to":"records@beta.example","subject":"Research inquiry: Record availability","body":"Hello,\n\nThis is an automated research inquiry from Alpha Research.\n\nTopic: Record availability\n\n1. Which records are publicly available?\n2. Where can we find the publication schedule?\n\nParticipation is optional. Please share only information you are authorized to share. To stop further inquiries, reply STOP.","at":"2030-01-01T00:00:00.000Z","delivery":"provider-accepted","verification":null,"policyAuthority":false},{"ref":{"tenantId":"alpha","projectId":"beta","kind":"correspondence-message","id":"in-dffa5bbb6662b361013c33e10594b88ffdac93df5e85cd997df77d6750d0a42f","revision":1},"direction":"inbound","from":"records@beta.example","to":"research@alpha.example","subject":"Re: Record availability","body":"STOP","at":"2030-01-01T00:00:00.000Z","delivery":"received-unverified","verification":"unverified","policyAuthority":false}],"drafts":[{"id":"alpha-draft","version":1,"subject":"Research inquiry: Record availability","body":"Hello,\n\nThis is an automated research inquiry from Alpha Research.\n\nTopic: Record availability\n\n1. Which records are publicly available?\n2. Where can we find the publication schedule?\n\nParticipation is optional. Please share only information you are authorized to share. To stop further inquiries, reply STOP.","status":"accepted","updatedAt":"2030-01-01T00:00:00.000Z"}],"outcomes":[{"id":"alpha-intent","status":"accepted","uncertainty":null}]}]}</script><script>const data = JSON.parse(document.getElementById("inbox-data").textContent),
+  list = document.getElementById("threads"),
+  detail = document.getElementById("conversation"),
+  search = document.getElementById("search");
+let view = "inbox",
+  selected = null;
+function element(tag, text, cls) {
+  const e = document.createElement(tag);
+  if (text !== undefined) e.textContent = text;
+  if (cls) e.className = cls;
+  return e;
+}
+function show(item) {
+  selected = item.thread.id;
+  detail.replaceChildren();
+  const header = element("header");
+  header.append(
+    element("h2", item.thread.subject),
+    element("p", "To: " + item.thread.recipient),
+  );
+  header.append(
+    element(
+      "p",
+      item.thread.autonomyPaused
+        ? "Autonomous contact paused"
+        : "Thread control: " + data.control,
+      "status",
+    ),
+  );
+  detail.append(header);
+  for (const message of item.messages) {
+    const article = element("article", undefined, "message");
+    article.append(
+      element("h3", message.subject),
+      element("p", message.from + " → " + message.to),
+      element("p", message.at + " · " + message.delivery, "meta"),
+    );
+    if (message.direction === "inbound")
+      article.append(
+        element(
+          "strong",
+          "Attributed reply · unverified · no policy authority",
+          "unverified",
+        ),
+      );
+    article.append(
+      element("pre", message.body),
+      element(
+        "small",
+        "Record " + message.ref.id + " · revision " + message.ref.revision,
+      ),
+    );
+    detail.append(article);
+  }
+  for (const draft of item.drafts) {
+    const article = element("article", undefined, "draft");
+    article.append(
+      element("h3", "Draft: " + draft.subject),
+      element("p", draft.status + " · version " + draft.version, "meta"),
+      element("pre", draft.body),
+    );
+    detail.append(article);
+  }
+  for (const outcome of item.outcomes)
+    if (
+      ["queued", "prepared", "handed-off", "uncertain"].includes(outcome.status)
+    )
+      detail.append(
+        element(
+          "p",
+          "Delivery " +
+            outcome.status +
+            (outcome.status === "uncertain"
+              ? " · reconcile before another attempt"
+              : ""),
+          "status",
+        ),
+      );
+  document
+    .querySelectorAll("[data-thread]")
+    .forEach((e) =>
+      e.setAttribute("aria-pressed", String(e.dataset.thread === selected)),
+    );
+}
+function render() {
+  const query = search.value.trim().toLowerCase(),
+    allowed = new Set(data.membership[view]);
+  const rows = data.threads
+    .filter(
+      (item) =>
+        allowed.has(item.thread.id) &&
+        [
+          item.thread.subject,
+          item.thread.recipient,
+          ...item.messages.flatMap((m) => [m.subject, m.body, m.from]),
+          ...item.drafts.flatMap((d) => [d.subject, d.body]),
+        ]
+          .join("\n")
+          .toLowerCase()
+          .includes(query),
+    )
+    .sort(
+      (a, b) =>
+        b.thread.lastActivityAt.localeCompare(a.thread.lastActivityAt) ||
+        a.thread.id.localeCompare(b.thread.id),
+    );
+  list.replaceChildren();
+  for (const item of rows) {
+    const button = element(
+      "button",
+      undefined,
+      "thread " + (item.thread.read ? "read" : "unread"),
+    );
+    button.type = "button";
+    button.dataset.thread = item.thread.id;
+    button.setAttribute("aria-pressed", String(selected === item.thread.id));
+    button.append(
+      element("strong", item.thread.subject),
+      element("span", item.thread.recipient),
+      element(
+        "small",
+        item.thread.lastActivityAt + (item.thread.starred ? " · Starred" : ""),
+      ),
+    );
+    button.onclick = () => show(item);
+    list.append(button);
+  }
+  document.getElementById("result-status").textContent =
+    rows.length +
+    " conversations · " +
+    view +
+    " · snapshot revision " +
+    data.revision;
+  if (!rows.some((item) => item.thread.id === selected)) {
+    selected = null;
+    detail.replaceChildren(
+      element(
+        "p",
+        rows.length
+          ? "Select a conversation to review messages and drafts."
+          : "No conversations match this view.",
+      ),
+    );
+  }
+  document
+    .querySelectorAll("[data-view]")
+    .forEach((button) =>
+      button.setAttribute("aria-pressed", String(button.dataset.view === view)),
+    );
+}
+document.querySelectorAll("[data-view]").forEach(
+  (button) =>
+    (button.onclick = () => {
+      view = button.dataset.view;
+      render();
+    }),
+);
+search.addEventListener("input", render);
+render();
+</script></body></html>

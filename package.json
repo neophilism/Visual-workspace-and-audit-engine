@@ -29,7 +29,8 @@
     "test": "node --test tests/*.test.ts",
     "check": "npm run typecheck && npm test && npm run build && node scripts/validate-pr-registry.mjs",
     "build": "tsc -p tsconfig.build.json",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "example:inbox": "npm run build && node scripts/render-inbox-example.mjs"
   },
   "devDependencies": {
     "@types/jsdom": "21.1.7",

@@ -6,7 +6,7 @@ Active agent markers require a current visible task lease. Agent labels and summ
 
 The renderer emits a standalone private HTML workspace with clickable/keyboard-operable SVG nodes, an accessible table, timeline and exact-record inspector. Text and embedded JSON are escaped, remote assets are not loaded, and reduced-motion preference is respected. The renderer is a private export, not a public publication gateway. The host must authorize exporting and securely serve any resulting private artifact.
 
-Live subscriptions, moving agent interpolation across snapshots, authenticated engine-specific inbox/case screens, multilingual layouts and browser/accessibility acceptance remain planned. Current snapshots are trusted filtered projections supplied by authenticated adapters; this library is not an authorization server.
+Live subscriptions, moving agent interpolation across snapshots, authenticated inbox mutation/case screens, multilingual layouts and browser/accessibility acceptance remain planned. Current snapshots are trusted filtered projections supplied by authenticated adapters; this library is not an authorization server.
 
 ## Interaction verification and example
 
@@ -15,3 +15,7 @@ Live subscriptions, moving agent interpolation across snapshots, authenticated e
 ## Budget and release adapters
 
 [Private operations projections](OPERATIONS.md) connect typed pinned budget and release snapshots to the graph, table, timeline and exact-record inspector. They preserve uncertainty and historical corrections, reject inconsistent bindings and expose no mutation or external transport.
+
+## Correspondence inbox
+
+[Private inbox](INBOX.md) implements the authorized read-only folder/search/conversation component using pinned Correspondence projections. It preserves unverified reply status and private defaults, excluding grants and credential handles. Compose, takeover controls and live authenticated commands remain pending.
