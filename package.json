@@ -19,6 +19,10 @@
     "./inbox": {
       "types": "./dist/inbox.d.ts",
       "default": "./dist/inbox.js"
+    },
+    "./operator-client": {
+      "types": "./dist/operator-client.d.ts",
+      "default": "./dist/operator-client.js"
     }
   },
   "engines": {
@@ -46,6 +50,6 @@
   "dependencies": {
     "@accountability/resources": "git+https://github.com/neophilism/Resources-and-commercial-operations-engine.git#5a1ed825fef938702c333066935afea4c42f9b21",
     "@accountability/packaging-release": "git+https://github.com/neophilism/Packaging-release-and-correction-engine.git#b3ddcaeba1bef27310ff2113d6abca9a249b40a7",
-    "@accountability/correspondence": "git+https://github.com/neophilism/Correspondence-and-Outreach-Engine.git#0cd689fb33106fcfa4ed50f7eb4d091e8c447315"
+    "@accountability/correspondence": "git+https://github.com/neophilism/Correspondence-and-Outreach-Engine.git#97778c1212a02194e61a27f53b928f098af81b88"
   }
 }
