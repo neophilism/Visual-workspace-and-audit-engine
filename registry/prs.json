@@ -4,7 +4,7 @@
   "roadmapVersion": 1,
   "planVerified": true,
   "plannedPrCount": 6,
-  "observedAt": "2026-10-26T20:30:00Z",
+  "observedAt": "2026-10-26T20:42:50Z",
   "units": [
     {
       "id": "VWA-001",
@@ -66,7 +66,9 @@
       "title": "Accessible correspondence and investigation views",
       "origin": "original",
       "prs": [],
-      "contributingPrs": [],
+      "contributingPrs": [
+        4
+      ],
       "dependsOn": [
         "VWA-001"
       ],
@@ -76,7 +78,7 @@
         "Accessible correspondence and investigation views"
       ],
       "acceptanceCriteria": "Verify required behavior, rejection paths, source-bound test evidence and private defaults; live acceptance remains separate.",
-      "implementationStatus": "planned"
+      "implementationStatus": "Partial authorized private read-only inbox with folders/search/conversation review. Authenticated compose/edit/takeover, investigation/case screens and live browser acceptance remain pending."
     },
     {
       "id": "VWA-005",

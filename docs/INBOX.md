@@ -1,0 +1,15 @@
+# Private read-only inbox
+
+The `./inbox` subpath uses the pinned Correspondence SDK's `projectMail` and `projectThread`, preserving its human-only, scoped read authorization and folder membership rules. The host authenticates context and fetches an authorized aggregate; browser data, mail text and arbitrary client headers cannot supply roles or select another scope. Nested message references are checked again. This module never connects to Gmail, Graph, OAuth, SMTP, a database or a send gateway.
+
+The screen provides folder navigation (Inbox, Unread, Starred, Drafts, Sent, Archive, All Mail, Trash and Spam), local full-text search, conversation selection, messages and saved drafts. All Mail retains the upstream exclusion of trash/spam. It collects all authorized pages instead of silently dropping results after the first 100. Visible mailbox control, paused contact, draft versions, exact message record revisions and uncertain delivery status come from the snapshot. Selecting/searching does not mark messages read or change flags. Inbound replies remain attributed and unverified, with no policy authority.
+
+Grants, authorization epochs, credential/connection handles, account references, dispatch envelopes and provider command digests are excluded. Projection limits are 500 threads, 2000 messages, 1000 drafts and 2 MiB of encoded content. A deployment needing a larger mailbox must provide protected server pagination, not silently truncate records or remove limits. Any generated HTML is a private data export requiring the host's usual authorization and secure storage/serving.
+
+All mail is rendered as text through DOM textContent. Embedded JSON escapes script terminators and Unicode line separators. Remote images, attachments, links and other active email HTML are not rendered. The standalone document loads no remote assets and its CSP disallows network connections, forms and base URL changes. Search and selection are local and transient.
+
+This is the read-only component of the correspondence workspace. Compose/edit/flags, authenticated human takeover/resume, optimistic command submission and live updates are still pending host integrations. No buttons pretend to perform those operations. No send, release, publication or live account enablement is added. The backend's existing takeover semantics remain available to a future separately authenticated UI gateway.
+
+Five new tests exercise real upstream domain states, read/scope denial, nested scope rejection, private-field exclusion, multiple pages, size limits, folder/search/selection without mutation, inert injected mail text and actual uncertain-handoff display. They execute the generated UI in JSDOM. Real browser, responsive visual inspection, assistive technology and live-host acceptance remain separate.
+
+`npm run example:inbox` generates `docs/examples/private-inbox.html` from the upstream entirely fictional deterministic fixture. Its provider behavior is simulated; no mail is sent or account connected. Open that private example locally to inspect the screen.

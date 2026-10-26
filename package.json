@@ -15,6 +15,10 @@
     "./operations": {
       "types": "./dist/operations.d.ts",
       "default": "./dist/operations.js"
+    },
+    "./inbox": {
+      "types": "./dist/inbox.d.ts",
+      "default": "./dist/inbox.js"
     }
   },
   "engines": {
@@ -25,7 +29,8 @@
     "test": "node --test tests/*.test.ts",
     "check": "npm run typecheck && npm test && npm run build && node scripts/validate-pr-registry.mjs",
     "build": "tsc -p tsconfig.build.json",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "example:inbox": "npm run build && node scripts/render-inbox-example.mjs"
   },
   "devDependencies": {
     "@types/jsdom": "21.1.7",
@@ -40,6 +45,7 @@
   ],
   "dependencies": {
     "@accountability/resources": "git+https://github.com/neophilism/Resources-and-commercial-operations-engine.git#5a1ed825fef938702c333066935afea4c42f9b21",
-    "@accountability/packaging-release": "git+https://github.com/neophilism/Packaging-release-and-correction-engine.git#b3ddcaeba1bef27310ff2113d6abca9a249b40a7"
+    "@accountability/packaging-release": "git+https://github.com/neophilism/Packaging-release-and-correction-engine.git#b3ddcaeba1bef27310ff2113d6abca9a249b40a7",
+    "@accountability/correspondence": "git+https://github.com/neophilism/Correspondence-and-Outreach-Engine.git#0cd689fb33106fcfa4ed50f7eb4d091e8c447315"
   }
 }
