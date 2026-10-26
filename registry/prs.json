@@ -4,7 +4,7 @@
   "roadmapVersion": 1,
   "planVerified": true,
   "plannedPrCount": 6,
-  "observedAt": "2026-10-26T21:52:34Z",
+  "observedAt": "2026-10-26T22:53:31Z",
   "units": [
     {
       "id": "VWA-001",
@@ -68,7 +68,8 @@
       "prs": [],
       "contributingPrs": [
         4,
-        5
+        5,
+        6
       ],
       "dependsOn": [
         "VWA-001"
@@ -84,7 +85,7 @@
         "Accessible correspondence and investigation views"
       ],
       "acceptanceCriteria": "Verify required behavior, rejection paths, source-bound test evidence and private defaults; live acceptance remains separate.",
-      "implementationStatus": "Partial: private inbox plus operator client and mounted existing-conversation draft/flag/takeover controls. Full pagination, new-conversation UI, live host integration, case views and browser acceptance remain pending."
+      "implementationStatus": "Partial: offline inbox plus same-origin operator controls, revision-bound pagination and recoverable two-stage new-conversation/private-draft composition. Host integration, richer mounted folder/search controls, crash/reload recovery, case views and browser acceptance remain pending."
     },
     {
       "id": "VWA-005",
