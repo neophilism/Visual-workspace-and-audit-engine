@@ -24,7 +24,9 @@
     "prepare": "npm run build"
   },
   "devDependencies": {
+    "@types/jsdom": "21.1.7",
     "@types/node": "26.6.5",
+    "jsdom": "26.1.0",
     "typescript": "7.0.2"
   },
   "files": [
