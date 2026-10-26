@@ -11,6 +11,18 @@ export function mountOperatorControls(
     busy = false,
     revision = 0,
     selected: string | null = null;
+  let pageOffset = 0;
+  let composition: null | {
+    recipient: string;
+    subject: string;
+    body: string;
+    threadId: string;
+    draftId: string;
+    threadInputId: string;
+    draftInputId: string;
+    phase: "thread" | "draft";
+    revision: number;
+  } = null;
   const el = <K extends keyof HTMLElementTagNameMap>(tag: K, text?: string) => {
     const e = d.createElement(tag);
     if (text !== undefined) e.textContent = text;
@@ -59,7 +71,11 @@ export function mountOperatorControls(
         status.textContent = client.pending
           ? "Edit outcome unknown. Resolve pending edit before making another change."
           : error instanceof OperatorClientError
-            ? error.code + " — refresh and review before another edit."
+            ? (composition?.phase === "draft"
+                ? "Conversation exists; draft remains incomplete. "
+                : "") +
+              error.code +
+              " — refresh and review before another edit."
             : "Unable to update private workspace.";
     } finally {
       busy = false;
@@ -155,9 +171,12 @@ export function mountOperatorControls(
     );
     lock();
   }
-  async function refresh() {
+  async function refresh(offset = pageOffset, expected?: number) {
     const session = await client.session(),
-      page = await client.mail("all");
+      page = await client.mail("all", offset);
+    if (expected !== undefined && page.revision !== expected)
+      throw new OperatorClientError("mailbox_changed");
+    pageOffset = offset;
     if (disposed) return;
     if (
       !page ||
@@ -170,17 +189,94 @@ export function mountOperatorControls(
     list.replaceChildren();
     for (const thread of page.threads)
       list.append(button(thread.subject, () => select(thread.id)));
+    list.append(
+      el(
+        "p",
+        `${offset + 1}-${offset + page.threads.length} of ${page.total} conversations`,
+      ),
+    );
+    if (offset > 0)
+      list.append(
+        button("Previous page", () =>
+          refresh(Math.max(0, offset - 50), page.revision),
+        ),
+      );
     if (page.nextOffset !== null)
       list.append(
-        el(
-          "p",
-          "More conversations exist; use the host paginated inbox to view them.",
-        ),
+        button("Next page", () => refresh(page.nextOffset, page.revision)),
       );
     if (selected) await select(selected);
   }
   toolbar.append(
-    button("Refresh", refresh),
+    button("Refresh", () => refresh()),
+    button("New conversation", async () => {
+      selected = null;
+      composition = null;
+      const recipient = el("input"),
+        subject = el("input"),
+        body = el("textarea");
+      recipient.type = "email";
+      for (const [label, input] of [
+        ["Recipient", recipient],
+        ["Subject", subject],
+        ["Private draft", body],
+      ] as const) {
+        const l = el("label", label);
+        l.append(input);
+        if (label === "Recipient")
+          detail.replaceChildren(el("h3", "New private conversation"));
+        detail.append(l);
+      }
+      detail.append(
+        button("Create conversation and draft", async () => {
+          if (!composition) {
+            composition = {
+              recipient: recipient.value,
+              subject: subject.value,
+              body: body.value,
+              threadId: crypto.randomUUID(),
+              draftId: crypto.randomUUID(),
+              threadInputId: crypto.randomUUID(),
+              draftInputId: crypto.randomUUID(),
+              phase: "thread",
+              revision,
+            };
+            recipient.disabled = subject.disabled = body.disabled = true;
+          }
+          const c = composition;
+          if (c.phase === "thread") {
+            const r = await client.submit(c.revision, {
+              type: "createThread",
+              inputId: c.threadInputId,
+              threadId: c.threadId,
+              recipient: c.recipient,
+              subject: c.subject,
+            });
+            c.phase = "draft";
+            c.revision = r.revision;
+          }
+          await client.submit(c.revision, {
+            type: "createDraft",
+            inputId: c.draftInputId,
+            threadId: c.threadId,
+            draftId: c.draftId,
+            content: { kind: "human", subject: c.subject, body: c.body },
+          });
+          composition = null;
+          await select(c.threadId);
+          return "Private conversation and draft created.";
+        }),
+        button("Cancel composition", async () => {
+          const partial = composition?.phase === "draft";
+          composition = null;
+          detail.replaceChildren();
+          await refresh();
+          return partial
+            ? "Conversation remains; unfinished draft was not claimed as saved."
+            : "Composition closed.";
+        }),
+      );
+    }),
     button("Take human control", async () => {
       const result = await client.submit(revision, {
         type: "setControl",
@@ -198,7 +294,25 @@ export function mountOperatorControls(
     button(
       "Resolve pending edit",
       async () => {
-        await client.retryPending();
+        const pending = client.pending;
+        const result = await client.retryPending();
+        if (
+          composition &&
+          pending?.command.inputId === composition.threadInputId
+        ) {
+          composition.phase = "draft";
+          composition.revision = result.revision;
+          return "Conversation creation reconciled. Select Create conversation and draft to finish the draft.";
+        }
+        if (
+          composition &&
+          pending?.command.inputId === composition.draftInputId
+        ) {
+          const id = composition.threadId;
+          composition = null;
+          await select(id);
+          return "Private draft creation reconciled.";
+        }
         await refresh();
         return "Original edit reconciled; workspace refreshed.";
       },
@@ -206,7 +320,7 @@ export function mountOperatorControls(
     ),
   );
   root.replaceChildren(heading, toolbar, status, list, detail);
-  const ready = run(refresh);
+  const ready = run(() => refresh());
   return {
     ready,
     dispose() {

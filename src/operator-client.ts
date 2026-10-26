@@ -161,8 +161,48 @@ export class OperatorClient {
     this.#session = structuredClone(s);
     return structuredClone(s);
   }
-  async mail(view = "inbox") {
-    return this.#read("/operator/mail?view=" + encodeURIComponent(view));
+  async mail(view = "inbox", offset = 0, query = "") {
+    if (
+      ![
+        "inbox",
+        "archive",
+        "all",
+        "drafts",
+        "unread",
+        "starred",
+        "sent",
+        "trash",
+        "spam",
+      ].includes(view) ||
+      !Number.isSafeInteger(offset) ||
+      offset < 0 ||
+      query.length > 200
+    )
+      throw new OperatorClientError("invalid_page");
+    const page = await this.#read(
+      "/operator/mail?view=" +
+        encodeURIComponent(view) +
+        "&offset=" +
+        offset +
+        "&limit=50&query=" +
+        encodeURIComponent(query),
+    );
+    if (
+      !page ||
+      !Number.isSafeInteger(page.revision) ||
+      page.revision < 0 ||
+      !Number.isSafeInteger(page.total) ||
+      page.total < 0 ||
+      !Array.isArray(page.threads) ||
+      page.threads.length > 50 ||
+      new Set(page.threads.map((t: any) => t.id)).size !==
+        page.threads.length ||
+      (page.nextOffset !== null &&
+        (page.nextOffset !== offset + page.threads.length ||
+          page.threads.length !== 50))
+    )
+      throw new OperatorClientError("invalid_response");
+    return page;
   }
   async thread(id: string) {
     return this.#read("/operator/thread?id=" + encodeURIComponent(id));
