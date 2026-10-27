@@ -43,6 +43,14 @@
     "./text-jobs": {
       "types": "./dist/text-jobs.d.ts",
       "default": "./dist/text-jobs.js"
+    },
+    "./reconciliation-client": {
+      "types": "./dist/reconciliation-client.d.ts",
+      "default": "./dist/reconciliation-client.js"
+    },
+    "./reconciliation-controls": {
+      "types": "./dist/reconciliation-controls.d.ts",
+      "default": "./dist/reconciliation-controls.js"
     }
   },
   "engines": {
@@ -60,6 +68,7 @@
     "example:consents": "npm run build && node scripts/render-consent-example.mjs"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "0.5.12",
     "@types/jsdom": "21.1.7",
     "@types/node": "26.6.5",
     "jsdom": "26.1.0",
@@ -75,7 +84,7 @@
     "@accountability/correspondence": "git+https://github.com/neophilism/Correspondence-and-Outreach-Engine.git#97778c1212a02194e61a27f53b928f098af81b88",
     "@accountability/discovery-acquisition": "git+https://github.com/neophilism/Discovery-and-Acquisition-Engine.git#f87ba8cba1bde7d47c90dd7375f501728ffc40e0",
     "@accountability/packaging-release": "git+https://github.com/neophilism/Packaging-release-and-correction-engine.git#b3ddcaeba1bef27310ff2113d6abca9a249b40a7",
-    "@accountability/processing": "github:neophilism/Document-and-Media-Processing-Engine#6f99bc8aea2f7f7def6264c70d81bf0345315ba7",
+    "@accountability/processing": "github:neophilism/Document-and-Media-Processing-Engine#44d76aefb8701852398182a158248c1b6b7a8fda",
     "@accountability/resources": "git+https://github.com/neophilism/Resources-and-commercial-operations-engine.git#5a1ed825fef938702c333066935afea4c42f9b21"
   }
 }
