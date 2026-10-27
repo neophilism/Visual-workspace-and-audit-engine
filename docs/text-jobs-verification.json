@@ -1,0 +1,14 @@
+{
+  "stage": "local",
+  "testsPassed": 59,
+  "newTextJobGroups": 5,
+  "fixture": "Synthetic typed Processing snapshots and executed JSDOM shared inspectors",
+  "processingPin": "6f99bc8aea2f7f7def6264c70d81bf0345315ba7",
+  "sourceHashes": {
+    "src/text-jobs.ts": "6f35cdae2ddd8fcabbe5695de73de436d7fae56a54ab07da9a6c36eeac7644b7",
+    "tests/text-jobs.test.ts": "b2cf1a57a0ea5f439e96739fc23c66c5702145f68cb15f1e8934ee0fbca48f06",
+    "src/contracts.ts": "d86141cb7546a723f837a298e4ea6fef62692918f78f5aab2d72d6639987fcc5"
+  },
+  "liveDatabaseNetworkBrowserReceiptAcceptance": "not_performed",
+  "finalHeadCi": "required_before_merge"
+}
