@@ -91,6 +91,7 @@ export function projectTextJob(
   const nodes: VisualNode[] = [];
   const used = new Set([refKey(root)]);
   function linked(ref: Ref, label: string): Ref {
+    fields(ref, ["tenantId", "projectId", "kind", "id", "revision"]);
     validateRef(ref);
     requireScope(c, ref);
     invariant(
@@ -144,6 +145,12 @@ export function projectTextJob(
     "invalid_text_job",
     "Status lacks required stored revisions",
   );
+  if (j.status === "queued")
+    invariant(
+      input.revision === 1,
+      "invalid_text_job",
+      "Queued job must be its first stored edition",
+    );
   const assigned = j.workerId !== null;
   if (assigned) {
     nonempty(j.workerId!, "worker", 128);

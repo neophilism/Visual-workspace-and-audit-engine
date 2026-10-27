@@ -201,3 +201,51 @@ test("shared table and SVG inspectors show identical literal job detail and iner
   );
   dom.window.close();
 });
+
+test("successful and unconsumed states retain exact outcome editions without terminal audit inventions", () => {
+  for (const status of [
+    "queued",
+    "leased",
+    "cancelled",
+    "completed",
+  ] as const) {
+    const f = fixture();
+    delete f.job.failure;
+    f.job.status = status;
+    if (status === "queued") {
+      f.revision = 1;
+      f.job.workerId = null;
+      f.job.workerKind = null;
+      f.job.leaseExpiresAt = null;
+    }
+    if (status === "leased" || status === "cancelled") f.revision = 2;
+    if (status !== "completed") f.job.consumedAt = null;
+    else
+      f.job.outcome = {
+        derivative: { ...ref, kind: "derivative", id: "output", revision: 7 },
+        sha256: "b".repeat(64),
+        receipt: { ...ref, kind: "receipt", id: "success", revision: 5 },
+      };
+    const s = projectTextJob(c, f, "tested");
+    assert.equal(s.nodes.at(-1)!.state, status);
+    assert.deepEqual(s.events, []);
+    assert.deepEqual(s.agents, []);
+    if (status === "completed") {
+      assert.ok(s.nodes.some((n) => n.ref.revision === 7));
+      assert.ok(s.nodes.some((n) => n.ref.revision === 5));
+    }
+  }
+  const leaked = fixture();
+  Object.assign(leaked.job.source, { credential: "private" });
+  assert.throws(() => projectTextJob(c, leaked, "tested"), {
+    code: "invalid_text_job",
+  });
+  const other = fixture();
+  other.job.status = "queued";
+  delete other.job.failure;
+  other.job.workerId = null;
+  other.job.workerKind = null;
+  other.job.leaseExpiresAt = null;
+  other.job.consumedAt = null;
+  assert.throws(() => projectTextJob(c, other, "tested"));
+});
