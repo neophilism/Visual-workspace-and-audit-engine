@@ -156,6 +156,13 @@ test("unsaved editor text blocks filter reads until save or explicit close", asy
     s.root.querySelector("textarea")!.value,
     "Retain this unsaved draft",
   );
+  s.click("Star");
+  await settle();
+  assert.equal(f.requests.length, count);
+  assert.equal(
+    s.root.querySelector("textarea")!.value,
+    "Retain this unsaved draft",
+  );
   s.click("Close conversation");
   await settle();
   assert.equal(s.root.querySelector("textarea"), null);
@@ -299,4 +306,40 @@ test("disposing a pending read prevents late writes even to detached filter cont
   assert.equal(writes, 0);
   assert.equal(root.children.length, 0);
   dom.window.close();
+});
+test("read and star toggles use viewed revisions and refresh the corresponding virtual folders", async () => {
+  const f = fixture();
+  f.state.threads[0]!.read = true;
+  f.state.threads[0]!.starred = false;
+  const s = await screen(f.client);
+  s.click("Record availability");
+  await settle();
+  s.click("Mark unread");
+  await settle();
+  assert.equal(f.state.threads[0]!.read, false);
+  s.click("Star");
+  await settle();
+  assert.equal(f.state.threads[0]!.starred, true);
+  s.choose("starred");
+  await settle();
+  assert(
+    s.root
+      .querySelector('section[aria-label="Conversations"]')!
+      .textContent!.includes("1-1 of 1"),
+  );
+  s.click("Record availability");
+  await settle();
+  s.click("Unstar");
+  await settle();
+  assert(
+    s.root
+      .querySelector('section[aria-label="Conversations"]')!
+      .textContent!.includes("0 total"),
+  );
+  const commands = f.requests
+    .filter((r) => r.init.method === "POST")
+    .map((r) => JSON.parse(r.init.body).command);
+  assert(commands.every((command) => command.type === "setThreadFlags"));
+  assert.equal(f.state.intents.length, 1);
+  s.close();
 });

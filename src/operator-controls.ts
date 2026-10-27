@@ -107,11 +107,13 @@ export function mountOperatorControls(
         status.textContent = client.pending
           ? "Edit outcome unknown. Resolve pending edit before making another change."
           : error instanceof OperatorClientError
-            ? (composition?.phase === "draft"
-                ? "Conversation exists; draft remains incomplete. "
-                : "") +
-              error.code +
-              " — refresh and review before another edit."
+            ? error.code === "unsaved_draft"
+              ? "unsaved_draft — Save private draft or Close conversation before navigating or changing flags."
+              : (composition?.phase === "draft"
+                  ? "Conversation exists; draft remains incomplete. "
+                  : "") +
+                error.code +
+                " — refresh and review before another edit."
             : "Unable to update private workspace.";
     } finally {
       busy = false;
@@ -190,18 +192,32 @@ export function mountOperatorControls(
       }),
     );
     detail.append(
-      button("Mark read", async () => {
+      button(data.thread.read ? "Mark unread" : "Mark read", async () => {
+        if (unsaved()) throw new OperatorClientError("unsaved_draft");
         await client.submit(data.revision, {
           type: "setThreadFlags",
           inputId: crypto.randomUUID(),
           threadId: id,
-          read: true,
+          read: !data.thread.read,
+        });
+        await refresh();
+      }),
+    );
+    detail.append(
+      button(data.thread.starred ? "Unstar" : "Star", async () => {
+        if (unsaved()) throw new OperatorClientError("unsaved_draft");
+        await client.submit(data.revision, {
+          type: "setThreadFlags",
+          inputId: crypto.randomUUID(),
+          threadId: id,
+          starred: !data.thread.starred,
         });
         await refresh();
       }),
     );
     detail.append(
       button("Archive", async () => {
+        if (unsaved()) throw new OperatorClientError("unsaved_draft");
         await client.submit(data.revision, {
           type: "setThreadFlags",
           inputId: crypto.randomUUID(),
