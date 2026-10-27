@@ -42,6 +42,11 @@ export function projectParticipantConsent(
   stage: WorkStage,
 ): WorkspaceSnapshot {
   c = structuredClone(c);
+  invariant(
+    Buffer.byteLength(canonical(input)) <= 128 * 1024,
+    "projection_too_large",
+    "Participant review exceeds the private projection budget",
+  );
   const {
     offer,
     consent,
@@ -105,6 +110,11 @@ export function projectParticipantConsent(
     );
   else {
     invariant(
+      responseOpen === false,
+      "invalid_offer",
+      "A resolved offer cannot be reported as open",
+    );
+    invariant(
       offer.ref.revision === 2 &&
         typeof offer.resolvedAt === "string" &&
         typeof offer.resolvedBy === "string" &&
@@ -154,7 +164,7 @@ export function projectParticipantConsent(
       "reference_collision",
       "Source uses a reserved permission kind",
     );
-    return add({
+    const node = add({
       ref,
       label: ref.id,
       kind: "source",
@@ -165,12 +175,23 @@ export function projectParticipantConsent(
         "Referenced " +
         role +
         " edition; this view does not fetch or authenticate its bytes.",
-      details: json({ reference: ref, role }),
+      details: json({ reference: ref, roles: [role] }),
     });
+    const details = node.details as { [key: string]: Json; roles: string[] };
+    if (!details.roles.includes(role)) details.roles.push(role);
+    node.summary =
+      "Referenced " +
+      details.roles.join(" and ") +
+      " edition; this view does not fetch or authenticate its bytes.";
+    return node;
   }
   const resource = source(offer.terms.resource.ref, "resource");
   resource.kind = "artifact";
-  resource.details = json({ resource: offer.terms.resource });
+  resource.details = json({
+    resource: offer.terms.resource,
+    reference: resource.ref,
+    roles: ["resource"],
+  });
   const evidence = source(offer.terms.evidence, "permission evidence");
   const dependencies = [
     ...new Map(
@@ -289,6 +310,7 @@ export function projectParticipantConsent(
         receipt: offer.consent,
         currentConsent: consent,
         currentRevision: consent.ref.revision,
+        independentlyLoadedHistoricalBytes: false,
         useAllowed:
           "Not evaluated. Separate rights, purpose, audience and release decisions remain required.",
       });

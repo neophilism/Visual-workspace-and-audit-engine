@@ -35,3 +35,7 @@ Operator controls also provide revision-bound pagination and two-stage new-conve
 CAPTION_REVIEW.md describes exact-source reparsing and stored derivative checks for private timed transcript review. The readable transcript and graph/table inspectors share exact edition and byte anchors. It performs no playback/network calls and does not treat media offsets as wall-clock events.
 
 Mounted operator controls also provide backend-projected folders and literal search with revision-bound paging, failure rollback and guards against discarding unsaved drafts during filter changes. Live hosting and browser/accessibility qualification remain separate.
+
+## Participant consent audit
+
+[Consent review](CONSENT_REVIEW.md) validates pinned-domain capture receipts and current withdrawal, presents literal disclosure plus shared graph/table inspectors, and separates offer metadata from independent audit evidence. It never infers a withdrawal actor or use/release authorization. Host, participant controls and browser/accessibility acceptance remain separate.

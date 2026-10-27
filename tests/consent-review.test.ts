@@ -12,7 +12,7 @@ import type {
   ParticipantReview,
 } from "@accountability/consent-rights/participant";
 import type { Context } from "../src/contracts.ts";
-import { digest, refKey } from "../src/contracts.ts";
+import { digest } from "../src/contracts.ts";
 import {
   projectParticipantConsent,
   renderParticipantConsent,
@@ -339,4 +339,45 @@ test("readable disclosure, graph and table share inert exact inspectors without 
   assert.equal(doc.getElementById("detail")!.textContent, fromGraph);
   assert.equal(doc.querySelectorAll("[data-agent]").length, 0);
   dom.window.close();
+});
+
+test("projection budget and closed-open contradictions fail; shared source edition coalesces with both roles", () => {
+  assert.throws(
+    () =>
+      projectParticipantConsent(
+        c,
+        { ...fixture(), warnings: ["x".repeat(128 * 1024)] },
+        "tested",
+      ),
+    { code: "projection_too_large" },
+  );
+  assert.throws(
+    () =>
+      projectParticipantConsent(
+        c,
+        { ...fixture(), responseOpen: true },
+        "tested",
+      ),
+    { code: "invalid_offer" },
+  );
+  const offered = fixture("offered");
+  const shared = rehash({
+    ...offered,
+    offer: {
+      ...offered.offer,
+      terms: {
+        ...offered.offer.terms,
+        evidence: offered.offer.terms.resource.ref,
+      },
+    },
+  });
+  const snapshot = projectParticipantConsent(c, shared, "tested");
+  assert.equal(snapshot.nodes.length, 2);
+  const source = snapshot.nodes.find((n) => n.ref.kind === "image")!;
+  assert.match(source.summary, /resource and permission evidence/);
+  assert.equal(
+    snapshot.nodes.find((n) => n.ref.kind === "consent-offer")!.dependencies
+      .length,
+    1,
+  );
 });

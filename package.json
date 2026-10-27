@@ -52,7 +52,8 @@
     "prepare": "npm run build",
     "example:inbox": "npm run build && node scripts/render-inbox-example.mjs",
     "example:acquisition": "npm run build && node scripts/render-acquisition-example.mjs",
-    "example:captions": "npm run build && node scripts/render-caption-example.mjs"
+    "example:captions": "npm run build && node scripts/render-caption-example.mjs",
+    "example:consents": "npm run build && node scripts/render-consent-example.mjs"
   },
   "devDependencies": {
     "@types/jsdom": "21.1.7",

@@ -1,4 +1,4 @@
-# Private consent review (checkpoint)
+# Private consent review
 
 `./consent-review` projects an already authorized participant review from the pinned Consent engine into the shared private graph, table and record inspector, with a readable literal disclosure. It validates the exact offer digest, scoped references, supported offer lifecycle, accepted domain terms and capture digest. Current consent is checked against the supported original capture/withdrawal profile. This is not authentication, evidence-byte verification or a determination that consent was legally valid.
 
@@ -6,4 +6,12 @@ Original capture and current withdrawal retain distinct exact revisions. Capture
 
 The view never determines use is allowed: rights, purposes, audiences and release decisions remain separate. It records the server's reported response-open value and separately calculates whether the offer is open at projection time. It does not turn an old open response into current response authority. All output is private and read-only: no consent acceptance, networking, invitations or publication. The host must authorize the input and export; a locally recomputed digest cannot authenticate a malicious host assertion.
 
-Checkpoint: five pure Consent-domain/JSDOM groups and all 53 Visual tests/typecheck/build/registry pass. Final source review and a fictional example are in progress. No new database, HTTP, real-browser, accessibility or live acceptance is claimed. References must fit the existing visual contract's 128-character fields and graph budgets.
+Six pure Consent-domain/JSDOM groups cover exact editions, capture/current history, lifecycle windows, contradictory/foreign data, inert graph/table inspectors, budget and shared source roles. Final verification is recorded in the PR and registry. No new database, HTTP, real-browser, accessibility or live acceptance is claimed. References must fit the existing visual contract's 128-character fields and graph budgets.
+
+The disclosure is visible as text above the map; the exact terms remain in its inspector. `reportedResponseOpen` is a host-supplied observation without a review timestamp. `responseOpenAtProjection` is only a derived display value; neither authorizes a response. Closed offers reported as open are rejected. A digest authenticates no host assertions, so a malicious host can fabricate an internally consistent offer/disclosure. This view does not replace authorized storage, signed evidence, the acknowledgement audit or identity controls.
+
+The entire supplied review is limited to 128 KiB before projection, including unrendered fields. Source editions shared by resource and permission evidence coalesce while preserving both roles. Reserved permission kinds, ambiguous display references and inconsistent lifecycle/capture/current fields fail closed. The capture is checked with the pinned domain profile, which supports original consent and one withdrawal revision; future consent revision operations require an updated adapter.
+
+`npm run example:consents` generates `docs/examples/private-consent-review.html` deterministically from an entirely fictional domain fixture. The example is a private export sample; it contains no real report, participant or deployment policy.
+
+Final local evidence: 54 tests, strict typecheck, build and registry validation pass. Six new groups use the accepted pure Consent domain plus executed JSDOM graph/table interactions; they do not add SQL/HTTP integration evidence. Disclosure/current text, metadata timeline and raw record inspectors are checked without real-browser or assistive-technology acceptance.

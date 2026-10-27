@@ -4,7 +4,7 @@
   "roadmapVersion": 1,
   "planVerified": true,
   "plannedPrCount": 6,
-  "observedAt": "2026-10-27T03:57:09Z",
+  "observedAt": "2026-10-27T05:12:56Z",
   "units": [
     {
       "id": "VWA-001",
@@ -57,7 +57,8 @@
       "contributingPrs": [
         3,
         7,
-        8
+        8,
+        10
       ],
       "dependsOn": [
         "VWA-001"
@@ -66,6 +67,10 @@
         {
           "repository": "neophilism/Document-and-Media-Processing-Engine",
           "unitId": "DMP-004"
+        },
+        {
+          "repository": "neophilism/Consent-rights-and-use-decisions-engine",
+          "unitId": "CRU-004"
         }
       ],
       "externalPrerequisites": [],
@@ -73,7 +78,7 @@
         "Evidence timeline and correction-impact inspectors"
       ],
       "acceptanceCriteria": "Verify required behavior, rejection paths, source-bound test evidence and private defaults; live acceptance remains separate.",
-      "implementationStatus": "Partial: budget/release history and acquisition coverage/uncertainty projections with exact references, bounded history and truthful timeline gaps. Broader evidence integration and real-browser acceptance remain pending. PR8 adds private caption review with exact source reparsing, stored digest checks, bounded transcript/graph windows and byte/media anchors; host/browser/playback and broader review controls remain pending."
+      "implementationStatus": "Partial: budget/release history and acquisition coverage/uncertainty projections with exact references, bounded history and truthful timeline gaps. Broader evidence integration and real-browser acceptance remain pending. PR8 adds private caption review with exact source reparsing, stored digest checks, bounded transcript/graph windows and byte/media anchors; host/browser/playback and broader review controls remain pending. PR10 adds private participant consent offer/capture/current-withdrawal inspectors using pinned Consent domain functions; no live participant, host or browser acceptance."
     },
     {
       "id": "VWA-004",
@@ -85,7 +90,8 @@
         5,
         6,
         8,
-        9
+        9,
+        10
       ],
       "dependsOn": [
         "VWA-001"
@@ -98,6 +104,10 @@
         {
           "repository": "neophilism/Document-and-Media-Processing-Engine",
           "unitId": "DMP-004"
+        },
+        {
+          "repository": "neophilism/Consent-rights-and-use-decisions-engine",
+          "unitId": "CRU-004"
         }
       ],
       "externalPrerequisites": [],
@@ -105,7 +115,7 @@
         "Accessible correspondence and investigation views"
       ],
       "acceptanceCriteria": "Verify required behavior, rejection paths, source-bound test evidence and private defaults; live acceptance remains separate.",
-      "implementationStatus": "Partial: offline inbox plus same-origin operator controls, revision-bound pagination and recoverable two-stage new-conversation/private-draft composition. Host integration, remaining operator interactions, crash/reload recovery, case views and browser acceptance remain pending. PR8 adds private caption review with exact source reparsing, stored digest checks, bounded transcript/graph windows and byte/media anchors; host/browser/playback and broader review controls remain pending. PR9 adds actual operator-backed folder/search filters, filter-bound pagination, unsaved/pending/composition guards and read-failure rollback; live hosting and browser acceptance remain pending."
+      "implementationStatus": "Partial: offline inbox plus same-origin operator controls, revision-bound pagination and recoverable two-stage new-conversation/private-draft composition. Host integration, remaining operator interactions, crash/reload recovery, case views and browser acceptance remain pending. PR8 adds private caption review with exact source reparsing, stored digest checks, bounded transcript/graph windows and byte/media anchors; host/browser/playback and broader review controls remain pending. PR9 adds actual operator-backed folder/search filters, filter-bound pagination, unsaved/pending/composition guards and read-failure rollback; live hosting and browser acceptance remain pending. PR10 adds private participant consent offer/capture/current-withdrawal inspectors using pinned Consent domain functions; no live participant, host or browser acceptance."
     },
     {
       "id": "VWA-005",
