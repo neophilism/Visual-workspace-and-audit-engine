@@ -1,0 +1,9 @@
+# Private consent review (checkpoint)
+
+`./consent-review` projects an already authorized participant review from the pinned Consent engine into the shared private graph, table and record inspector, with a readable literal disclosure. It validates the exact offer digest, scoped references, supported offer lifecycle, accepted domain terms and capture digest. Current consent is checked against the supported original capture/withdrawal profile. This is not authentication, evidence-byte verification or a determination that consent was legally valid.
+
+Original capture and current withdrawal retain distinct exact revisions. Capture content is reconstructed using the accepted domain function and checked against the stored receipt digest, not independently fetched from historical storage. Offer creation/resolution timeline rows are explicitly record metadata linked to the containing offer edition, not independently loaded audit events. The consent record lacks a withdrawal actor; the projection discloses that gap and creates no attributed withdrawal event.
+
+The view never determines use is allowed: rights, purposes, audiences and release decisions remain separate. It records the server's reported response-open value and separately calculates whether the offer is open at projection time. It does not turn an old open response into current response authority. All output is private and read-only: no consent acceptance, networking, invitations or publication. The host must authorize the input and export; a locally recomputed digest cannot authenticate a malicious host assertion.
+
+Checkpoint: five pure Consent-domain/JSDOM groups and all 53 Visual tests/typecheck/build/registry pass. Final source review and a fictional example are in progress. No new database, HTTP, real-browser, accessibility or live acceptance is claimed. References must fit the existing visual contract's 128-character fields and graph budgets.
