@@ -4,7 +4,7 @@
   "roadmapVersion": 1,
   "planVerified": true,
   "plannedPrCount": 6,
-  "observedAt": "2026-10-26T22:53:31Z",
+  "observedAt": "2026-10-27T00:14:03Z",
   "units": [
     {
       "id": "VWA-001",
@@ -30,17 +30,24 @@
       "title": "Objective task and persistent agent projections",
       "origin": "original",
       "prs": [],
-      "contributingPrs": [],
+      "contributingPrs": [
+        7
+      ],
       "dependsOn": [
         "VWA-001"
       ],
-      "externalDependencies": [],
+      "externalDependencies": [
+        {
+          "repository": "neophilism/Discovery-and-Acquisition-Engine",
+          "unitId": "DAE-005"
+        }
+      ],
       "externalPrerequisites": [],
       "scope": [
         "Objective task and persistent agent projections"
       ],
       "acceptanceCriteria": "Verify required behavior, rejection paths, source-bound test evidence and private defaults; live acceptance remains separate.",
-      "implementationStatus": "planned"
+      "implementationStatus": "Partial: PR7 adds acquisition collection/task projections with exact revisions, global coverage and bounded history. Persistent agent identity/runtime projections and live delivery remain pending; acquisition leases are not invented agent identities."
     },
     {
       "id": "VWA-003",
@@ -48,7 +55,8 @@
       "origin": "original",
       "prs": [],
       "contributingPrs": [
-        3
+        3,
+        7
       ],
       "dependsOn": [
         "VWA-001"
@@ -59,7 +67,7 @@
         "Evidence timeline and correction-impact inspectors"
       ],
       "acceptanceCriteria": "Verify required behavior, rejection paths, source-bound test evidence and private defaults; live acceptance remains separate.",
-      "implementationStatus": "Partial: private budget and exact release-history projections with correction inspectors; broader evidence timeline integration and real-browser acceptance remain pending."
+      "implementationStatus": "Partial: budget/release history and acquisition coverage/uncertainty projections with exact references, bounded history and truthful timeline gaps. Broader evidence integration and real-browser acceptance remain pending."
     },
     {
       "id": "VWA-004",

@@ -202,8 +202,8 @@ export function projectAcquisition(
       state: !state.enabled
         ? "paused"
         : uncertain
-          ? "active-with-uncertainty"
-          : "active",
+          ? "enabled-with-unresolved-work"
+          : "enabled",
       stage,
       dependencies: [],
       summary: `${coverage.capturedItems} of ${coverage.expected} planned items captured; ${coverage.uniqueByteEditions} unique byte editions. Capture counts are not incident counts.`,
@@ -212,6 +212,11 @@ export function projectAcquisition(
         storageRevision: revision,
         coverage,
         unresolvedConsumedAttempts: uncertain,
+        sourcePolicy: {
+          id: collection.sourcePolicy.id,
+          enabled: collection.sourcePolicy.enabled,
+          expiresAt: collection.sourcePolicy.expiresAt,
+        },
         windows: {
           itemOffset,
           itemLimit,
