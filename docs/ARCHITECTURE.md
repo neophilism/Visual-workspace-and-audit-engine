@@ -29,3 +29,7 @@ Operator controls also provide revision-bound pagination and two-stage new-conve
 ## Acquisition coverage and recovery
 
 [Private acquisition projections](ACQUISITION.md) expose collection-wide coverage alongside bounded item/attempt history, exact receipt references and unresolved consumed work. They retain containing storage revisions and explicitly disclose missing timeline metadata; no live worker or persistent agent runtime is inferred.
+
+## Caption review
+
+CAPTION_REVIEW.md describes exact-source reparsing and stored derivative checks for private timed transcript review. The readable transcript and graph/table inspectors share exact edition and byte anchors. It performs no playback/network calls and does not treat media offsets as wall-clock events.

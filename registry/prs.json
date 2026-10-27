@@ -4,7 +4,7 @@
   "roadmapVersion": 1,
   "planVerified": true,
   "plannedPrCount": 6,
-  "observedAt": "2026-10-27T00:14:03Z",
+  "observedAt": "2026-10-27T02:59:46Z",
   "units": [
     {
       "id": "VWA-001",
@@ -56,18 +56,24 @@
       "prs": [],
       "contributingPrs": [
         3,
-        7
+        7,
+        8
       ],
       "dependsOn": [
         "VWA-001"
       ],
-      "externalDependencies": [],
+      "externalDependencies": [
+        {
+          "repository": "neophilism/Document-and-Media-Processing-Engine",
+          "unitId": "DMP-004"
+        }
+      ],
       "externalPrerequisites": [],
       "scope": [
         "Evidence timeline and correction-impact inspectors"
       ],
       "acceptanceCriteria": "Verify required behavior, rejection paths, source-bound test evidence and private defaults; live acceptance remains separate.",
-      "implementationStatus": "Partial: budget/release history and acquisition coverage/uncertainty projections with exact references, bounded history and truthful timeline gaps. Broader evidence integration and real-browser acceptance remain pending."
+      "implementationStatus": "Partial: budget/release history and acquisition coverage/uncertainty projections with exact references, bounded history and truthful timeline gaps. Broader evidence integration and real-browser acceptance remain pending. PR8 adds private caption review with exact source reparsing, stored digest checks, bounded transcript/graph windows and byte/media anchors; host/browser/playback and broader review controls remain pending."
     },
     {
       "id": "VWA-004",
@@ -77,7 +83,8 @@
       "contributingPrs": [
         4,
         5,
-        6
+        6,
+        8
       ],
       "dependsOn": [
         "VWA-001"
@@ -86,6 +93,10 @@
         {
           "repository": "neophilism/Correspondence-and-Outreach-Engine",
           "unitId": "COE-004"
+        },
+        {
+          "repository": "neophilism/Document-and-Media-Processing-Engine",
+          "unitId": "DMP-004"
         }
       ],
       "externalPrerequisites": [],
@@ -93,7 +104,7 @@
         "Accessible correspondence and investigation views"
       ],
       "acceptanceCriteria": "Verify required behavior, rejection paths, source-bound test evidence and private defaults; live acceptance remains separate.",
-      "implementationStatus": "Partial: offline inbox plus same-origin operator controls, revision-bound pagination and recoverable two-stage new-conversation/private-draft composition. Host integration, richer mounted folder/search controls, crash/reload recovery, case views and browser acceptance remain pending."
+      "implementationStatus": "Partial: offline inbox plus same-origin operator controls, revision-bound pagination and recoverable two-stage new-conversation/private-draft composition. Host integration, richer mounted folder/search controls, crash/reload recovery, case views and browser acceptance remain pending. PR8 adds private caption review with exact source reparsing, stored digest checks, bounded transcript/graph windows and byte/media anchors; host/browser/playback and broader review controls remain pending."
     },
     {
       "id": "VWA-005",
