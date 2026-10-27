@@ -1,0 +1,12 @@
+import { writeFile } from 'node:fs/promises';
+import { importWebVtt } from '@accountability/processing/captions';
+import { hashBytes } from '../dist/contracts.js';
+import { renderCaptionReview } from '../dist/caption-review.js';
+const c={tenantId:'fictional',projectId:'review',actor:{id:'owner',kind:'human',roles:['owner']},purpose:'research',requestId:'example',now:'2026-01-01T00:00:00Z'};
+const ref={tenantId:c.tenantId,projectId:c.projectId,kind:'evidence',id:'caption-fixture',revision:2};
+const bytes=Buffer.from('WEBVTT\n\nfirst\n00:00.000 --> 00:02.500\nA fictional caption requiring source review.\n\nsecond\n00:02.000 --> 00:04.000\nAn overlapping supplied cue; no speaker identity is inferred.\n');
+const captions={source:ref,sha256:hashBytes(bytes),bytes,scanStatus:'clean',processingAllowed:true};
+const media={source:{...ref,id:'media-fixture',revision:7},sha256:'a'.repeat(64),durationMs:5000,processingAllowed:true};
+const result=importWebVtt(c,captions,media);
+const input={captions,media,derivative:{ref:{...ref,kind:'processed-artifact',id:'derivative-fixture',revision:9},sha256:result.sha256}};
+await writeFile(new URL('../docs/examples/private-caption-review.html',import.meta.url),renderCaptionReview(c,input,'tested'));
