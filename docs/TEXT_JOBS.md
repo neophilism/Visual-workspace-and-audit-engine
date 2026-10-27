@@ -1,0 +1,7 @@
+# Private text processing job inspection
+
+`./text-jobs` projects one authorized snapshot from Processing's pinned text-job ledger. Stored job keys and revisions are preserved. Source, derivative and receipt links are exact editions, explicitly not independently read or verified here. A retry child links to its parent failed edition; the parent is a referenced record, not reconstructed parent content. Queue acknowledgement is not an execution permit.
+
+The host must authenticate and authorize the snapshot and private export. The component is not an authorization or receipt service. Consumed uncertainty stays unresolved after lease expiry. Worker identity and lease fields are record metadata, not persistent agent/live activity evidence. Submission and consumption times stay in inspectors; no raw audit timeline is invented. Completion/failure timestamps and actors are absent in the upstream record and explicitly disclosed as such.
+
+The input is bounded to 64KiB, rejects unknown fields, inconsistent statuses, duplicate reference roles, foreign references and inconsistent retry identities. The graph/table/inspector share literal escaped content. No database, network, retry controls, dispatch or publication is added. Initial synthetic snapshot and JSDOM tests do not qualify real database/host/browser/accessibility or proof services. Broader review and final-head CI are pending at this checkpoint.
