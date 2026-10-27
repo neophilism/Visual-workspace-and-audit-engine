@@ -11,7 +11,10 @@ export function mountOperatorControls(
     busy = false,
     revision = 0,
     selected: string | null = null;
-  let pageOffset = 0;
+  let pageOffset = 0,
+    activeView = "all",
+    activeQuery = "";
+  let unsaved = () => false;
   let composition: null | {
     recipient: string;
     subject: string;
@@ -32,7 +35,32 @@ export function mountOperatorControls(
     status = el("p"),
     list = el("section"),
     detail = el("section"),
-    toolbar = el("div");
+    toolbar = el("div"),
+    navigation = el("div"),
+    folder = el("select"),
+    search = el("input");
+  navigation.setAttribute("aria-label", "Mail navigation");
+  navigation.setAttribute("role", "navigation");
+  folder.setAttribute("aria-label", "Mail folder");
+  search.type = "search";
+  search.maxLength = 200;
+  search.setAttribute("aria-label", "Search conversations");
+  for (const [value, label] of [
+    ["all", "All mail"],
+    ["inbox", "Inbox"],
+    ["archive", "Archive"],
+    ["drafts", "Drafts"],
+    ["unread", "Unread"],
+    ["starred", "Starred"],
+    ["sent", "Sent"],
+    ["trash", "Trash"],
+    ["spam", "Spam"],
+  ]) {
+    const option = el("option", label);
+    option.value = value!;
+    folder.append(option);
+  }
+  folder.value = activeView;
   status.setAttribute("role", "status");
   status.setAttribute("aria-live", "polite");
   list.setAttribute("aria-label", "Conversations");
@@ -54,6 +82,8 @@ export function mountOperatorControls(
     return b;
   }
   function lock() {
+    folder.disabled = search.disabled =
+      busy || !!client.pending || !!composition;
     root.querySelectorAll<HTMLButtonElement>("button").forEach((b) => {
       b.disabled =
         busy ||
@@ -77,15 +107,21 @@ export function mountOperatorControls(
         status.textContent = client.pending
           ? "Edit outcome unknown. Resolve pending edit before making another change."
           : error instanceof OperatorClientError
-            ? (composition?.phase === "draft"
-                ? "Conversation exists; draft remains incomplete. "
-                : "") +
-              error.code +
-              " — refresh and review before another edit."
+            ? error.code === "unsaved_draft"
+              ? "unsaved_draft — Save private draft or Close conversation before navigating or changing flags."
+              : (composition?.phase === "draft"
+                  ? "Conversation exists; draft remains incomplete. "
+                  : "") +
+                error.code +
+                " — refresh and review before another edit."
             : "Unable to update private workspace.";
     } finally {
       busy = false;
-      if (!disposed) lock();
+      if (!disposed) {
+        folder.value = activeView;
+        search.value = activeQuery;
+        lock();
+      }
     }
   }
   async function select(id: string) {
@@ -118,6 +154,10 @@ export function mountOperatorControls(
       bodyLabel = el("label", "Draft text");
     subject.value = draft?.subject ?? data.thread.subject;
     body.value = draft?.body ?? "";
+    const originalSubject = subject.value,
+      originalBody = body.value;
+    unsaved = () =>
+      subject.value !== originalSubject || body.value !== originalBody;
     subjectLabel.append(subject);
     bodyLabel.append(body);
     detail.append(subjectLabel, bodyLabel);
@@ -152,18 +192,32 @@ export function mountOperatorControls(
       }),
     );
     detail.append(
-      button("Mark read", async () => {
+      button(data.thread.read ? "Mark unread" : "Mark read", async () => {
+        if (unsaved()) throw new OperatorClientError("unsaved_draft");
         await client.submit(data.revision, {
           type: "setThreadFlags",
           inputId: crypto.randomUUID(),
           threadId: id,
-          read: true,
+          read: !data.thread.read,
         });
-        await select(id);
+        await refresh();
+      }),
+    );
+    detail.append(
+      button(data.thread.starred ? "Unstar" : "Star", async () => {
+        if (unsaved()) throw new OperatorClientError("unsaved_draft");
+        await client.submit(data.revision, {
+          type: "setThreadFlags",
+          inputId: crypto.randomUUID(),
+          threadId: id,
+          starred: !data.thread.starred,
+        });
+        await refresh();
       }),
     );
     detail.append(
       button("Archive", async () => {
+        if (unsaved()) throw new OperatorClientError("unsaved_draft");
         await client.submit(data.revision, {
           type: "setThreadFlags",
           inputId: crypto.randomUUID(),
@@ -171,18 +225,31 @@ export function mountOperatorControls(
           folder: "archive",
         });
         selected = null;
+        unsaved = () => false;
         detail.replaceChildren();
         await refresh();
       }),
     );
+    detail.append(
+      button("Close conversation", async () => {
+        selected = null;
+        unsaved = () => false;
+        detail.replaceChildren();
+        return "Conversation closed; unsaved local edits discarded.";
+      }),
+    );
     lock();
   }
-  async function refresh(offset = pageOffset, expected?: number) {
+  async function refresh(
+    offset = pageOffset,
+    expected?: number,
+    filter = { view: activeView, query: activeQuery },
+    resetSelection = false,
+  ) {
     const session = await client.session(),
-      page = await client.mail("all", offset);
+      page = await client.mail(filter.view, offset, filter.query);
     if (expected !== undefined && page.revision !== expected)
       throw new OperatorClientError("mailbox_changed");
-    pageOffset = offset;
     if (disposed) return;
     if (
       !page ||
@@ -190,9 +257,22 @@ export function mountOperatorControls(
       !Array.isArray(page.threads)
     )
       throw new OperatorClientError("invalid_response");
+    pageOffset = offset;
+    activeView = filter.view;
+    activeQuery = filter.query;
+    folder.value = activeView;
+    search.value = activeQuery;
+    if (resetSelection) {
+      selected = null;
+      unsaved = () => false;
+      detail.replaceChildren();
+    }
     revision = page.revision;
     heading.textContent = session.brand + " · " + session.control + " control";
-    list.replaceChildren();
+    list.replaceChildren(
+      el("h3", folder.selectedOptions[0]?.textContent ?? activeView),
+      el("p", activeQuery ? `Search: ${activeQuery}` : "No search filter"),
+    );
     for (const thread of page.threads)
       list.append(button(thread.subject, () => select(thread.id)));
     list.append(
@@ -215,11 +295,33 @@ export function mountOperatorControls(
       );
     if (selected) await select(selected);
   }
+  async function applyFilter(view: string, query: string) {
+    if (client.pending || composition)
+      throw new OperatorClientError("edit_pending");
+    if (unsaved()) throw new OperatorClientError("unsaved_draft");
+    await refresh(0, undefined, { view, query }, true);
+  }
+  folder.onchange = () => {
+    void run(() => applyFilter(folder.value, activeQuery));
+  };
+  search.onkeydown = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      void run(() => applyFilter(activeView, search.value));
+    }
+  };
+  navigation.append(
+    folder,
+    search,
+    button("Search", () => applyFilter(activeView, search.value)),
+    button("Clear search", () => applyFilter(activeView, "")),
+  );
   toolbar.append(
     button("Refresh", () => refresh()),
     button("New conversation", async () => {
       selected = null;
       composition = null;
+      unsaved = () => false;
       const recipient = el("input"),
         subject = el("input"),
         body = el("textarea");
@@ -327,7 +429,7 @@ export function mountOperatorControls(
       true,
     ),
   );
-  root.replaceChildren(heading, toolbar, status, list, detail);
+  root.replaceChildren(heading, toolbar, navigation, status, list, detail);
   const ready = run(() => refresh());
   return {
     ready,
