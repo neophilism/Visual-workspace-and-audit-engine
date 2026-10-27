@@ -21,7 +21,7 @@ async function screen(client: OperatorClient) {
   const fill = async () => {
     click("New conversation");
     await settle();
-    const inputs = root.querySelectorAll("input");
+    const inputs = root.querySelector('section[aria-label="Selected conversation"]')!.querySelectorAll("input");
     inputs[0]!.value = "fictional@archive.example";
     inputs[1]!.value = "Fictional new conversation";
     root.querySelector("textarea")!.value = "Private draft body";
