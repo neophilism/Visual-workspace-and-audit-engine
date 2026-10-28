@@ -47,3 +47,7 @@ Mounted operator controls also provide backend-projected folders and literal sea
 ## Explicit processing reconciliation
 
 [Private reconciliation controls](RECONCILIATION_CONTROLS.md) connect the pinned accepted Processing private HTTP API to explicit reviewed execution recovery. Immutable pending input locks uncertain results; fresh session CSRF precedes exact explicit replay. No automatic execution, retry, no-output inference or mode switch is provided. Host/current policy, crash/reload recovery and browser/accessibility qualification remain pending.
+
+## Explicit participant controls
+
+[Private participant controls](PARTICIPANT_CONTROLS.md) use the pinned accepted Consent PR8 client for one explicitly selected offer, inert exact disclosure/terms, unchecked affirmative acknowledgement, separate decline/withdraw and immutable pending replay. They issue no automatic requests. Current authenticated hosting, identity/purpose lifecycle, private reload recovery and actual browser/assistive-technology acceptance remain pending. No invitation/send/publication controls exist.

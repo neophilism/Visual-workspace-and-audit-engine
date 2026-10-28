@@ -1,0 +1,44 @@
+{
+  "observedAt": "2026-10-28T11:08:34Z",
+  "scope": "VWA-004/005 opt-in private mounted participant controls",
+  "consentSource": "43c4d786be774ee61c03c8ec599c4ee3521046e9",
+  "consentAcceptedMerge": "e1311115ac25999ebdf2591aea0b6be6ae3a6c0f",
+  "local": {
+    "ordinaryTests": 75,
+    "newHandlerMigrationJSDOMGroups": 6,
+    "typecheck": "passed",
+    "build": "passed",
+    "registry": "passed"
+  },
+  "installed": {
+    "publicEntry": "@accountability/visual-workspace/participant-controls",
+    "groups": 6,
+    "compiledControls": "byte-matched build"
+  },
+  "initialCi": {
+    "source": "e4428b02ed4fed06b40d6c03b56ac324344a8005",
+    "run": 40677289017,
+    "check": 122778830558,
+    "ordinaryTests": 74,
+    "logsInspected": true
+  },
+  "review": [
+    "No initial request; unchecked acknowledgement and separate explicit accept/decline/reviewed withdrawal",
+    "Exact inert disclosure/terms/editions/digests and historical capture versus current withdrawal; no use authorization",
+    "Busy/pending/closed and single mounted-owner guards; host transfers exclusive client ownership",
+    "Immutable uncertain/rejected request replay only, actual accepted-then-withdrawn replay stays historical",
+    "Fresh CSRF on explicit replay, identity closure, disposal and detached-node fencing"
+  ],
+  "limitations": [
+    "No new network-session/listening host/login/session/TLS/Identity/real participant qualification",
+    "JSDOM is not real browser or assistive technology acceptance",
+    "Memory-only pending; host preserves blocked intent on navigation/reload and must dispose on identity/purpose/policy changes",
+    "Exclusive mounted client must not be directly mutated by host or shared with other views",
+    "No invitation/manager/send/publication/automatic retry or release authorization"
+  ],
+  "sourceSha256": {
+    "src/participant-controls.ts": "d05a4a402d4ea38074815fbcc2a566fef751a76da1016b9403568d3742e96e0b",
+    "tests/participant-controls.test.ts": "8509664c1ebf6d51125c95b3f7ba20a402fc5f4f2b853afa84536b83d196e695",
+    "tests/participant-fixture.ts": "0d46fab25acdd8981f1319321f82e0b07770c7d670f81adc9484e20668a5fcb0"
+  }
+}
