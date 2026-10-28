@@ -337,3 +337,24 @@ test("identity change closes pending controls and disposal fences detached nodes
   assert.equal(delayed.root.childNodes.length, 0);
   assert.equal(delayed.requests.filter((r) => r.body).length, 0);
 });
+
+test("one mounted client owns its viewed terms; duplicate and closed mounts cannot replace another screen", async (t) => {
+  const f = await fixture(t);
+  const second = f.dom.window.document.createElement("main");
+  second.textContent = "untouched";
+  f.dom.window.document.body.append(second);
+  assert.throws(
+    () => mountParticipantControls(second, f.client, "offer"),
+    /client_unavailable/,
+  );
+  assert.equal(second.textContent, "untouched");
+  assert.equal(f.requests.length, 0);
+  await f.click("Review current offer");
+  assert.equal(f.checkbox().checked, false);
+  f.ui.dispose();
+  assert.throws(
+    () => mountParticipantControls(second, f.client, "offer"),
+    /client_unavailable/,
+  );
+  assert.equal(second.textContent, "untouched");
+});

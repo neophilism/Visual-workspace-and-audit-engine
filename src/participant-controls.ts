@@ -2,6 +2,9 @@ import { ParticipantClient } from "@accountability/consent-rights/participant-cl
 import type { ParticipantResult } from "@accountability/consent-rights/participant-client";
 import type { ParticipantReview } from "@accountability/consent-rights/participant";
 
+// One mounted owner prevents two screens from sharing a mutable viewed-review client.
+const mountedClients = new WeakSet<ParticipantClient>();
+
 /** Private same-origin participant controls. Hosting, identity and accessible presentation require qualification. */
 export function mountParticipantControls(
   root: HTMLElement,
@@ -19,6 +22,9 @@ export function mountParticipantControls(
       : pending?.command.offerId;
   if (pendingId !== undefined && pendingId !== offerId)
     throw Error("pending_offer_mismatch");
+  if (client.closed || mountedClients.has(client))
+    throw Error("client_unavailable");
+  mountedClients.add(client);
   let disposed = false,
     busy = false,
     viewed: ParticipantReview | null = null;
