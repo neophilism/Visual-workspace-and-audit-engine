@@ -4,7 +4,7 @@
   "roadmapVersion": 1,
   "planVerified": true,
   "plannedPrCount": 6,
-  "observedAt": "2026-10-27T10:59:14Z",
+  "observedAt": "2026-10-27T23:58:09Z",
   "units": [
     {
       "id": "VWA-001",
@@ -93,7 +93,8 @@
         6,
         8,
         9,
-        10
+        10,
+        12
       ],
       "dependsOn": [
         "VWA-001"
@@ -117,14 +118,16 @@
         "Accessible correspondence and investigation views"
       ],
       "acceptanceCriteria": "Verify required behavior, rejection paths, source-bound test evidence and private defaults; live acceptance remains separate.",
-      "implementationStatus": "Partial: offline inbox plus same-origin operator controls, revision-bound pagination and recoverable two-stage new-conversation/private-draft composition. Host integration, remaining operator interactions, crash/reload recovery, case views and browser acceptance remain pending. PR8 adds private caption review with exact source reparsing, stored digest checks, bounded transcript/graph windows and byte/media anchors; host/browser/playback and broader review controls remain pending. PR9 adds actual operator-backed folder/search filters, filter-bound pagination, unsaved/pending/composition guards and read-failure rollback; live hosting and browser acceptance remain pending. PR10 adds private participant consent offer/capture/current-withdrawal inspectors using pinned Consent domain functions; no live participant, host or browser acceptance."
+      "implementationStatus": "Partial: offline inbox plus same-origin operator controls, revision-bound pagination and recoverable two-stage new-conversation/private-draft composition. Host integration, remaining operator interactions, crash/reload recovery, case views and browser acceptance remain pending. PR8 adds private caption review with exact source reparsing, stored digest checks, bounded transcript/graph windows and byte/media anchors; host/browser/playback and broader review controls remain pending. PR9 adds actual operator-backed folder/search filters, filter-bound pagination, unsaved/pending/composition guards and read-failure rollback; live hosting and browser acceptance remain pending. PR10 adds private participant consent offer/capture/current-withdrawal inspectors using pinned Consent domain functions; no live participant, host or browser acceptance. PR12 adds explicit private Processing reconciliation client/controls over accepted DMP-005 HTTP adapter, fresh CSRF and immutable pending-request replay with uncertainty locks. Current authenticated hosting/Identity wiring, task navigation, reload recovery, real browser/accessibility and deployment qualification remain pending. No execution/retry/no-output/cleanup controls."
     },
     {
       "id": "VWA-005",
       "title": "Live event delivery operator controls and policy projections",
       "origin": "original",
       "prs": [],
-      "contributingPrs": [],
+      "contributingPrs": [
+        12
+      ],
       "dependsOn": [
         "VWA-002",
         "VWA-003",
@@ -136,7 +139,7 @@
         "Live event delivery operator controls and policy projections"
       ],
       "acceptanceCriteria": "Verify required behavior, rejection paths, source-bound test evidence and private defaults; live acceptance remains separate.",
-      "implementationStatus": "planned"
+      "implementationStatus": "Partial: PR12 adds explicit private Processing reconciliation client/controls over accepted DMP-005 HTTP adapter, fresh CSRF and immutable pending-request replay with uncertainty locks. Current authenticated hosting/Identity wiring, task navigation, reload recovery, real browser/accessibility and deployment qualification remain pending. No execution/retry/no-output/cleanup controls."
     },
     {
       "id": "VWA-006",

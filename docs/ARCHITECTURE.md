@@ -43,3 +43,7 @@ Mounted operator controls also provide backend-projected folders and literal sea
 ## Processing task records
 
 [Private text jobs](TEXT_JOBS.md) project accepted Processing PR9 snapshots with stored job keys/revisions, exact source/outcome/proof links and retry parent editions. Unknown outcomes stay unresolved; worker metadata does not become agent motion and record timestamps do not become raw audit events. Host/database/browser and receipt qualification remain separate.
+
+## Explicit processing reconciliation
+
+[Private reconciliation controls](RECONCILIATION_CONTROLS.md) connect the pinned accepted Processing private HTTP API to explicit reviewed execution recovery. Immutable pending input locks uncertain results; fresh session CSRF precedes exact explicit replay. No automatic execution, retry, no-output inference or mode switch is provided. Host/current policy, crash/reload recovery and browser/accessibility qualification remain pending.
