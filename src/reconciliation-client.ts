@@ -218,6 +218,7 @@ export class ReconciliationClient {
   }
   async #session(): Promise<string> {
     const response = await this.#exchange("/processing/session");
+    if (this.#closed) fail("client_closed");
     if (response.status !== 200) fail("session_unavailable");
     const s = exact(response.value, [
       "csrfToken",
@@ -309,6 +310,7 @@ export class ReconciliationClient {
       JSON.stringify(request),
       csrf,
     );
+    if (this.#closed) fail("client_closed");
     const result = this.#result(response.value, request, response.status);
     if (result.status === "completed") this.#pending = null;
     return result;

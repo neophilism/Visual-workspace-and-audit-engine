@@ -325,3 +325,115 @@ test("disposal fences late responses and detached UI; invalid origins/requests c
   );
   assert.equal(issued, 0);
 });
+
+test("busy commands, current-session failure and HTTP rejection cannot replace pending authority", async () => {
+  let finish!: (r: Response) => void,
+    posts = 0,
+    rejectedSession = false;
+  const c = new ReconciliationClient(origin, context, async (_u, o) => {
+    if (o?.method !== "POST")
+      return json(
+        rejectedSession ? { error: "authentication_required" } : session,
+        rejectedSession ? 401 : 200,
+      );
+    posts++;
+    return new Promise((r) => {
+      finish = r;
+    });
+  });
+  const first = c.reconcile(action);
+  await waitFor(() => !!finish);
+  await assert.rejects(c.reconcile(action), /client_locked/);
+  await assert.rejects(c.resolvePending(), /client_locked/);
+  finish(json({ error: "manager_required" }, 403));
+  await assert.rejects(first, /request_rejected/);
+  assert.deepEqual(c.pending, action);
+  rejectedSession = true;
+  await assert.rejects(c.resolvePending(), /session_unavailable/);
+  assert.deepEqual(c.pending, action);
+  assert.equal(posts, 1);
+});
+test("captured scope and transport remain fixed, malformed/redirected/private-cache responses retain exact pending", async () => {
+  const scope = { tenantId: context.tenantId, projectId: context.projectId };
+  let calls = 0;
+  const transport: typeof fetch = async (_u, o) => {
+    calls++;
+    return json(o?.method === "POST" ? completion : session);
+  };
+  const c = new ReconciliationClient(origin, scope, transport);
+  scope.projectId = "mutated";
+  assert.equal((await c.reconcile(action)).status, "completed");
+  assert.equal(calls, 2);
+  for (const bad of [
+    () =>
+      new Response("{}", {
+        headers: { "content-type": "text/html", "cache-control": "no-store" },
+      }),
+    () =>
+      new Response("{}", { headers: { "content-type": "application/json" } }),
+    () => {
+      const r = json(completion);
+      Object.defineProperty(r, "redirected", { value: true });
+      return r;
+    },
+    () => {
+      const r = json(completion);
+      Object.defineProperty(r, "url", {
+        value: "https://foreign.example/processing/reconcile",
+      });
+      return r;
+    },
+    () =>
+      json({ status: "reconciliation-required", phase: "absent-output" }, 503),
+  ]) {
+    const x = new ReconciliationClient(origin, context, async (_u, o) =>
+      o?.method === "POST" ? bad() : json(session),
+    );
+    await assert.rejects(x.reconcile(action));
+    assert.deepEqual(x.pending, action);
+  }
+});
+test("mounted unknown literal job text stays inert, action starts unselected and wrong document origin is refused", async () => {
+  const dom = new JSDOM("<main></main>", { url: origin }),
+    root = dom.window.document.querySelector("main")!;
+  const c = new ReconciliationClient(origin, context, async (_u, o) =>
+    json(
+      o?.method === "POST"
+        ? { status: "reconciliation-required", phase: "inspection" }
+        : session,
+      o?.method === "POST" ? 503 : 200,
+    ),
+  );
+  const m = mountReconciliationControls(root, c);
+  assert.equal(root.querySelector("select")!.value, "");
+  assert.equal(root.querySelectorAll("button")[1]!.disabled, true);
+  const literal = '<img src=x onerror="throw Error()">';
+  root.querySelectorAll("input")[0]!.value = literal;
+  root.querySelectorAll("input")[1]!.value = "3";
+  root.querySelector("select")!.value = "recover-stored";
+  root
+    .querySelector("form")!
+    .dispatchEvent(new dom.window.Event("submit", { cancelable: true }));
+  await waitFor(() =>
+    root.textContent!.includes("Diagnostic phase: inspection"),
+  );
+  assert.equal(root.querySelectorAll("img,script").length, 0);
+  assert(root.querySelector("pre")!.textContent!.includes("<img"));
+  assert.deepEqual(c.pending, {
+    ...action,
+    jobId: literal,
+    output: "recover-stored",
+  });
+  m.dispose();
+  dom.window.close();
+  const wrong = new JSDOM("<main></main>", { url: "https://foreign.example" });
+  assert.throws(
+    () =>
+      mountReconciliationControls(
+        wrong.window.document.querySelector("main")!,
+        new ReconciliationClient(origin, context, fetch),
+      ),
+    /origin_denied/,
+  );
+  wrong.window.close();
+});

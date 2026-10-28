@@ -1,0 +1,18 @@
+{
+  "stage": "local_and_installed_package_passed",
+  "ordinaryTestsPassed": 69,
+  "newReconciliationGroups": 10,
+  "installedPublicExportGroupsPassed": 10,
+  "processingPin": "44d76aefb8701852398182a158248c1b6b7a8fda",
+  "fixture": "Pinned actual Processing HTTP/coordinator/ledger, canonical migration/restricted-authenticated PGlite and temporary AES-GCM private objects; synthetic Response/ReadableStream adversaries and JSDOM",
+  "sourceReview": "Exact profiles/scope/editions, captured context/input, busy and immutable pending guards, fresh CSRF/identity change, full monotonic transport/body gates, post-exchange disposal, conservative HTTP failure retention and inert rendering",
+  "sourceHashes": {
+    "src/reconciliation-client.ts": "4af29a5c44ecbce83a5e72b01e625312e4cdab6d4a2bd98a10872a3a3c0efe35",
+    "src/reconciliation-controls.ts": "576c1fe9fc41b9d0869d12f71e327d3dd08e4a7183e1691eb5ee44bc008999a2",
+    "tests/reconciliation-fixture.ts": "2f5ce0c0aa03f394450833a4557278e32f7b9f4aba371ef98dbff629b7b6c9fa",
+    "tests/reconciliation.test.ts": "b78ce2a456752d07fc4f8e1fb419cf4ea7fa41f7ac0812624ed32ec20da9a7e1",
+    "src/contracts.ts": "d86141cb7546a723f837a298e4ea6fef62692918f78f5aab2d72d6639987fcc5"
+  },
+  "independentSqlNetworkBrowserAssistiveTechnologyLiveAcceptance": "not_performed",
+  "finalHeadCi": "required_before_merge"
+}
