@@ -4,7 +4,7 @@
   "roadmapVersion": 1,
   "planVerified": true,
   "plannedPrCount": 6,
-  "observedAt": "2026-10-27T23:58:09Z",
+  "observedAt": "2026-10-28T11:05:01Z",
   "units": [
     {
       "id": "VWA-001",
@@ -118,7 +118,7 @@
         "Accessible correspondence and investigation views"
       ],
       "acceptanceCriteria": "Verify required behavior, rejection paths, source-bound test evidence and private defaults; live acceptance remains separate.",
-      "implementationStatus": "Partial: offline inbox plus same-origin operator controls, revision-bound pagination and recoverable two-stage new-conversation/private-draft composition. Host integration, remaining operator interactions, crash/reload recovery, case views and browser acceptance remain pending. PR8 adds private caption review with exact source reparsing, stored digest checks, bounded transcript/graph windows and byte/media anchors; host/browser/playback and broader review controls remain pending. PR9 adds actual operator-backed folder/search filters, filter-bound pagination, unsaved/pending/composition guards and read-failure rollback; live hosting and browser acceptance remain pending. PR10 adds private participant consent offer/capture/current-withdrawal inspectors using pinned Consent domain functions; no live participant, host or browser acceptance. PR12 adds explicit private Processing reconciliation client/controls over accepted DMP-005 HTTP adapter, fresh CSRF and immutable pending-request replay with uncertainty locks. Current authenticated hosting/Identity wiring, task navigation, reload recovery, real browser/accessibility and deployment qualification remain pending. No execution/retry/no-output/cleanup controls."
+      "implementationStatus": "Partial: offline inbox plus same-origin operator controls, revision-bound pagination and recoverable two-stage new-conversation/private-draft composition. Host integration, remaining operator interactions, crash/reload recovery, case views and browser acceptance remain pending. PR8 adds private caption review with exact source reparsing, stored digest checks, bounded transcript/graph windows and byte/media anchors; host/browser/playback and broader review controls remain pending. PR9 adds actual operator-backed folder/search filters, filter-bound pagination, unsaved/pending/composition guards and read-failure rollback; live hosting and browser acceptance remain pending. PR10 adds private participant consent offer/capture/current-withdrawal inspectors using pinned Consent domain functions; no live participant, host or browser acceptance. PR12 adds explicit private Processing reconciliation client/controls over accepted DMP-005 HTTP adapter, fresh CSRF and immutable pending-request replay with uncertainty locks. Current authenticated hosting/Identity wiring, task navigation, reload recovery, real browser/accessibility and deployment qualification remain pending. No execution/retry/no-output/cleanup controls. Partial participant controls over accepted Consent PR8: explicit exact review/unchecked acknowledgement/decline/own-consent withdrawal and immutable uncertain replay; five actual pinned-handler/restricted-migration JSDOM groups and typecheck pass locally. Full CI/installed exports pending. Host session/purpose/logout, reload recovery and browser/assistive technology acceptance remain pending."
     },
     {
       "id": "VWA-005",
@@ -139,7 +139,7 @@
         "Live event delivery operator controls and policy projections"
       ],
       "acceptanceCriteria": "Verify required behavior, rejection paths, source-bound test evidence and private defaults; live acceptance remains separate.",
-      "implementationStatus": "Partial: PR12 adds explicit private Processing reconciliation client/controls over accepted DMP-005 HTTP adapter, fresh CSRF and immutable pending-request replay with uncertainty locks. Current authenticated hosting/Identity wiring, task navigation, reload recovery, real browser/accessibility and deployment qualification remain pending. No execution/retry/no-output/cleanup controls."
+      "implementationStatus": "Partial: PR12 adds explicit private Processing reconciliation client/controls over accepted DMP-005 HTTP adapter, fresh CSRF and immutable pending-request replay with uncertainty locks. Current authenticated hosting/Identity wiring, task navigation, reload recovery, real browser/accessibility and deployment qualification remain pending. No execution/retry/no-output/cleanup controls. Partial participant controls over accepted Consent PR8: explicit exact review/unchecked acknowledgement/decline/own-consent withdrawal and immutable uncertain replay; five actual pinned-handler/restricted-migration JSDOM groups and typecheck pass locally. Full CI/installed exports pending. Host session/purpose/logout, reload recovery and browser/assistive technology acceptance remain pending."
     },
     {
       "id": "VWA-006",
