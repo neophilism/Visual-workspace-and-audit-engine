@@ -73,14 +73,16 @@
     "example:inbox": "npm run build && node scripts/render-inbox-example.mjs",
     "example:acquisition": "npm run build && node scripts/render-acquisition-example.mjs",
     "example:captions": "npm run build && node scripts/render-caption-example.mjs",
-    "example:consents": "npm run build && node scripts/render-consent-example.mjs"
+    "example:consents": "npm run build && node scripts/render-consent-example.mjs",
+    "example:factual": "npm run build && node scripts/render-factual-example.mjs"
   },
   "devDependencies": {
     "@electric-sql/pglite": "0.5.12",
     "@types/jsdom": "21.1.7",
     "@types/node": "26.6.5",
     "jsdom": "26.1.0",
-    "typescript": "7.0.2"
+    "typescript": "7.0.2",
+    "@accountability/knowledge-verification": "git+https://github.com/neophilism/Knowledge-and-verification-engine.git#cb69243a48578feb07e85704185cced98964b1e4"
   },
   "files": [
     "dist",

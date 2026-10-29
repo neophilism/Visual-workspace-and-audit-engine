@@ -290,3 +290,93 @@ test("input and output byte budgets reject full views without truncating or muta
   );
   assert.deepEqual(state, before);
 });
+
+test("node and edge ceilings accept their boundary views then reject without partial projection", () => {
+  const f = fixture();
+  function make(
+    knowledge: ReturnType<typeof createKnowledgeState>,
+    value: Plan,
+    count: number,
+    chain: boolean,
+  ) {
+    const planning = revisePlan(c, knowledge, createPlanningState(c), {
+        id: "bounded",
+        expectedRevision: 0,
+        value,
+      }),
+      plan = planning.records[0]!.ref;
+    let efforts = createEffortState(c);
+    for (let i = 0; i < count; i++)
+      efforts = recordEffort(c, planning, efforts, {
+        id: `e${i}`,
+        expectedSequence: i,
+        plan,
+        questionId: "time",
+        leadId: null,
+        outcome: "attempted",
+        detail: "Unresolved fixture",
+        corrects: chain && i > 0 ? efforts.records.at(-1)!.ref : null,
+      });
+    return {
+      planning: { revision: 1, state: planning },
+      efforts: { revision: count, state: efforts, planningRevision: 1 },
+      plan,
+    };
+  }
+  const nodeLimit = make(f.knowledge, f.value, 252, false);
+  assert.equal(
+    projectFactualPlan(
+      c,
+      nodeLimit.planning,
+      nodeLimit.efforts,
+      nodeLimit.plan,
+      "tested",
+    ).nodes.length,
+    256,
+  );
+  const nodeOver = make(f.knowledge, f.value, 253, false);
+  assert.throws(
+    () =>
+      projectFactualPlan(
+        c,
+        nodeOver.planning,
+        nodeOver.efforts,
+        nodeOver.plan,
+        "tested",
+      ),
+    { code: "projection_too_large" },
+  );
+  const knowledge = reviseKnowledge(c, f.knowledge, {
+    id: "claim-two",
+    expectedRevision: 0,
+    value: f.knowledge.records[0]!.value,
+  });
+  const value = {
+    ...f.value,
+    basisClaimRefs: knowledge.records.map((r) => r.ref),
+  };
+  const edgeLimit = make(knowledge, value, 170, true),
+    out = projectFactualPlan(
+      c,
+      edgeLimit.planning,
+      edgeLimit.efforts,
+      edgeLimit.plan,
+      "tested",
+    );
+  assert.equal(
+    out.nodes.reduce((n, x) => n + x.dependencies.length, 0),
+    512,
+  );
+  const edgeOver = make(knowledge, value, 171, true);
+  assert.throws(
+    () =>
+      projectFactualPlan(
+        c,
+        edgeOver.planning,
+        edgeOver.efforts,
+        edgeOver.plan,
+        "tested",
+      ),
+    { code: "projection_too_large" },
+  );
+});
