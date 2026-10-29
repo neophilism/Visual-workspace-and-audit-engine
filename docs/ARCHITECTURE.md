@@ -51,3 +51,5 @@ Mounted operator controls also provide backend-projected folders and literal sea
 ## Explicit participant controls
 
 [Private participant controls](PARTICIPANT_CONTROLS.md) use the pinned accepted Consent PR8 client for one explicitly selected offer, inert exact disclosure/terms, unchecked affirmative acknowledgement, separate decline/withdraw and immutable pending replay. They issue no automatic requests. Current authenticated hosting, identity/purpose lifecycle, private reload recovery and actual browser/assistive-technology acceptance remain pending. No invitation/send/publication controls exist.
+
+Private exact Factual plan/effort snapshot review is documented in FACTUAL_REVIEW.md. It preserves selected editions and unresolved histories, without inventing question refs, audit events, agents or closure.
