@@ -1,0 +1,70 @@
+{
+  "observedAt": "2026-10-29T15:06:38.075000+00:00",
+  "scope": "Partial VWA-003/004 private exact Factual plan and effort snapshot review",
+  "factualSource": "48e02a6568f09e1d091eb24d6f161a6bcb7a8de5",
+  "factualAcceptedMerge": "cc92739c1e0638aa5810b79c2b15bdc41375e30a",
+  "knowledgeFixtureSource": "cb69243a48578feb07e85704185cced98964b1e4",
+  "local": {
+    "ordinaryTests": 80,
+    "newOwningDomainJSDOMGroups": 5,
+    "priorOrdinaryTests": 75,
+    "typecheck": "passed",
+    "build": "passed",
+    "registryAndPinnedDependencies": "passed",
+    "fictionalExample": "generated; five literal inert JSDOM inspectors; no remote elements"
+  },
+  "installed": {
+    "ordinaryTests": 80,
+    "newGroups": 5,
+    "completeTapFooter": true,
+    "exitCode": 0,
+    "publicEntry": "@accountability/visual-workspace/factual-review",
+    "compiledProjectionAndRenderer": "byte-matched local build; installed compiled public exports tested"
+  },
+  "initialCi": {
+    "source": "36e668debbeedbae67a1cc1c01ddf08ff25aeadc",
+    "run": 40896225589,
+    "check": 123525941850,
+    "ordinaryTests": 79,
+    "logsInspected": true
+  },
+  "expandedCi": {
+    "source": "8d1a55a40d1f2c478a734ba1cded7bdee8b9ee33",
+    "run": 40897349423,
+    "check": 123529965711,
+    "ordinaryTests": 80,
+    "headAndLogsInspected": true,
+    "conclusion": "success; clean npmci/typecheck/build/registry"
+  },
+  "review": [
+    "Exact top-level snapshots and five-field scoped refs; actual owning full-history validators; storage count/revision and planningRevision binding",
+    "All effort records checked against actual captured plan/question/optional lead before projection; purpose matches; selected exact edition required",
+    "Literal ordered questions/materiality/hypotheses/contrary tests/leads/stop conditions, no invented persisted question or lead refs",
+    "Selected-plan effort histories and correction predecessors retained; observed containing storage revisions are not creation editions",
+    "Referenced claim/case editions not independently read; predecessor not expanded; current means only relative to supplied captured history",
+    "No agents/events, invented audit actors/timestamps, coverage, verified answers or completeness/closure inference",
+    "4MiB input/512KiB output and exact256-node/512-edge boundary tests fail closed without partial output or mutation",
+    "JSDOM table and keyboard SVG inspectors agree, malicious script terminator remains inert; generated fictional example inspected"
+  ],
+  "limitations": [
+    "Trusted host Context and snapshots are not authentication, current permission, independently authenticated transport or source/work proof",
+    "Host must enforce current Identity/resource/purpose/consent/rights, bound ingress/CPU/heap, and separately authorize private export; downloaded bytes cannot be revoked",
+    "Current upstream delivery/authentication and broader Knowledge/Evidence/case/correction-impact integration remain pending",
+    "No new SQL/network-session/listening host/browser/assistive-technology/multilingual/deployment/live qualification",
+    "Owning domain fixtures are synthetic neutral records; baseline restricted-migration tests remain prior scenarios, not new network acceptance",
+    "No SQL/network mutation, mail/provider/send/publication/payment/PAM change; no question resolution or closure controls"
+  ],
+  "mergeAcceptance": "Inspect actual PR15 current-head checks and branch requirements before expected-head merge; earlier CI is source-bound evidence only.",
+  "sourceSha256": {
+    "package.json": "deac1e83266cf8333fcd6555edf5c01d6ee4ebf2943605625e85bcbb8406c7c3",
+    "package-lock.json": "68cca58b944798638dfbb7f98ffc4025efc82f8750d17f5e8f50d611091d7f75",
+    "src/factual-review.ts": "066419101c9e3f96821e74cc11273aae84824d2e0dd64b48b42ab4425249f5a0",
+    "tests/factual-review.test.ts": "74ce7a2d6899a1268c8b895b021764f3db05b779fb126370901b423484fd25d8",
+    "scripts/render-factual-example.mjs": "717161ebd21b266814f2c051485a414c12e3c8bba906047ba12db02da2033829",
+    "scripts/validate-pr-registry.mjs": "d07c6a492af2bbdf1a38523899d1e84e5ced3f313bb588f9c6241b4f736277b9",
+    "docs/FACTUAL_REVIEW.md": "6e689ae581b7da56228db9c14643a0791fbf063cc02a5aac687ea0f0a7cb15ad",
+    "docs/ARCHITECTURE.md": "03b7e76b613a60e43cb80dd9964f0a437c4dcd8a247f2b1f06e3e38dc73ae3c1",
+    "docs/examples/private-factual-review.html": "3e84b92dfcfd8a2888be35c57ebe637ab9f18d6c38e9f7cf08ed177287672742",
+    "registry/prs.json": "7390d65bb22149e9515ea7f51594f4b43f099e41ca6b6092b9db3b1af690dc30"
+  }
+}

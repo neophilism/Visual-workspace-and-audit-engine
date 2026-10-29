@@ -9,6 +9,11 @@ if (retired.repository !== repository || retired.deprecated !== true || retired.
   throw new Error('Only registry/prs.json may contain the active PR plan');
 console.log(`Valid PR registry: ${repository}, ${document.units.length} approved units; runtime acceptance is separate.`);
 
-const pkg = JSON.parse(await readFile(new URL('../package.json', import.meta.url),'utf8'));
-if(pkg.dependencies['@accountability/factual-investigation'] !== 'git+https://github.com/neophilism/Factual-investigation-engine.git#48e02a6568f09e1d091eb24d6f161a6bcb7a8de5') throw Error('Accepted Factual pin required');
-console.log('Accepted Factual snapshot SDK pinned');
+const pkg = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8'));
+if (pkg.dependencies['@accountability/factual-investigation'] !==
+    'git+https://github.com/neophilism/Factual-investigation-engine.git#48e02a6568f09e1d091eb24d6f161a6bcb7a8de5')
+  throw new Error('Accepted Factual pin required');
+if (pkg.devDependencies['@accountability/knowledge-verification'] !==
+    'git+https://github.com/neophilism/Knowledge-and-verification-engine.git#cb69243a48578feb07e85704185cced98964b1e4')
+  throw new Error('Accepted Knowledge fixture pin required');
+console.log('Accepted Factual snapshot and Knowledge fixture SDKs pinned');
