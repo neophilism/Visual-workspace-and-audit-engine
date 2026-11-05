@@ -155,7 +155,8 @@
         21,
         22,
         23,
-        24
+        24,
+        25
       ],
       "dependsOn": [
         "VWA-001"
@@ -226,6 +227,16 @@
         "pullRequest": "https://github.com/neophilism/Visual-workspace-and-audit-engine/pull/24",
         "status": "Partial read-only profile implemented/reviewed:12 focused wire/client/JSDOM plus3 actual4restrictedDB encrypted-Evidence/HTTP groups pass locally AND installed compiled public exports; declarations/3runtime bytes match. Prior full131 local+CI41959341817 passed; final current-head CI required. No132 full local/installed or real browser/AT/live claim. Protected writes/full correction impact/host identity/current rights remain pending.",
         "example": "docs/examples/private-selected-verification-read.html"
+      },
+      "verificationWriteClient": {
+        "docs": "docs/VERIFICATION_WRITE_CLIENT.md",
+        "status": "Explicitly incomplete WIP: final8 local synthetic +3 prior local actual4DB HTTP; ALL11 final installed in separate8+3 runs/zero failures/skips, strict declarations/2runtime bytes match. Full141local before preflight fixes/two new groups; no143 full-local-installed claim. Mounted controls/broader wire/source review/final current-head CI/browser-live still pending.",
+        "pullRequest": "https://github.com/neophilism/Visual-workspace-and-audit-engine/pull/25"
+      },
+      "verificationWriteControls": {
+        "docs": "docs/VERIFICATION_WRITE_CONTROLS.md",
+        "pullRequest": "https://github.com/neophilism/Visual-workspace-and-audit-engine/pull/25",
+        "status": "Explicitly incomplete WIP: mounted editor/dirty/pending/replay/lifecycle implementation; six focused local groups passed, including three owning four-DB encrypted-Evidence HTTP groups. Typecheck/build/registry passed; installed/full regression/source review/final-head CI pending. Host/browser/AT/live qualification separate."
       }
     },
     {
@@ -237,7 +248,8 @@
         12,
         14,
         23,
-        24
+        24,
+        25
       ],
       "dependsOn": [
         "VWA-002",
@@ -261,6 +273,16 @@
         "pullRequest": "https://github.com/neophilism/Visual-workspace-and-audit-engine/pull/24",
         "status": "Partial read-only profile implemented/reviewed:12 focused wire/client/JSDOM plus3 actual4restrictedDB encrypted-Evidence/HTTP groups pass locally AND installed compiled public exports; declarations/3runtime bytes match. Prior full131 local+CI41959341817 passed; final current-head CI required. No132 full local/installed or real browser/AT/live claim. Protected writes/full correction impact/host identity/current rights remain pending.",
         "example": "docs/examples/private-selected-verification-read.html"
+      },
+      "verificationWriteClient": {
+        "docs": "docs/VERIFICATION_WRITE_CLIENT.md",
+        "status": "Explicitly incomplete WIP: final8 local synthetic +3 prior local actual4DB HTTP; ALL11 final installed in separate8+3 runs/zero failures/skips, strict declarations/2runtime bytes match. Full141local before preflight fixes/two new groups; no143 full-local-installed claim. Mounted controls/broader wire/source review/final current-head CI/browser-live still pending.",
+        "pullRequest": "https://github.com/neophilism/Visual-workspace-and-audit-engine/pull/25"
+      },
+      "verificationWriteControls": {
+        "docs": "docs/VERIFICATION_WRITE_CONTROLS.md",
+        "pullRequest": "https://github.com/neophilism/Visual-workspace-and-audit-engine/pull/25",
+        "status": "Explicitly incomplete WIP: mounted editor/dirty/pending/replay/lifecycle implementation; six focused local groups passed, including three owning four-DB encrypted-Evidence HTTP groups. Typecheck/build/registry passed; installed/full regression/source review/final-head CI pending. Host/browser/AT/live qualification separate."
       }
     },
     {
